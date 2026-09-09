@@ -13,9 +13,8 @@ Python notebooks.
 - **12:30–13:30** — *Lunch*
 - **13:30–14:15** — [Lecture: Embedding the past](slides/CompMechSlidesPt3.pdf)
 - **14:15–14:30** — *Break*
-- **14:30–16:00** — Exercises: Embedding the past
-- **16:00–17:15** — Readings: Transformers represent belief geometry
-- **17:15–17:45** — Discussion
+- **14:30–16:00** — [Exercises: Embedding the past](written-exercises/CompMechExercisesPt3.pdf)
+- **16:00–17:45** — [Reading & Discussion: Transformers represent belief geometry & Neural networks represent](output/pdf/CompMechReadingGuidePt4.pdf)
 - **17:45–18:00** — Feedback
 
 ## Slides
@@ -33,15 +32,24 @@ template are in [`slides/`](slides/).
 
 - [Part 2 exercise sheet](written-exercises/CompMechExercisesPt2.pdf)
 - [Part 2 solutions](written-exercises/CompMechSolutionsPt2.pdf)
+- [Part 3 exercise sheet](written-exercises/CompMechExercisesPt3.pdf)
+- [Part 3 solutions](written-exercises/CompMechSolutionsPt3.pdf)
 
 The shared exercise content and separate student/solution wrappers are in
-[`written-exercises/`](written-exercises/). To rebuild both PDFs with a LaTeX
-installation and `latexmk`:
+[`written-exercises/`](written-exercises/). To rebuild all exercise and solution
+PDFs with a LaTeX installation and `latexmk`:
 
 ```bash
 cd written-exercises
 make
 ```
+
+## Reading guides
+
+The [Part 4 belief-geometry reading guide](output/pdf/CompMechReadingGuidePt4.pdf)
+and its reusable LaTeX source are in [`reading-guides/`](reading-guides/). The
+guide follows the same typography, colour, metadata, and A4 handout structure
+as the written exercises.
 
 ## Python exercises: HMM from scratch
 
