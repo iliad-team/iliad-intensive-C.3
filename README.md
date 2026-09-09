@@ -4,6 +4,20 @@ Teaching materials for the computational-mechanics view of sequence models.
 The repository contains presentation decks, written exercises, and hands-on
 Python notebooks.
 
+## Schedule
+
+- **10:00–10:30** — Lecture: Overview and scope
+- **10:30–11:15** — Lecture: Predicting the future
+- **11:15–11:30** — *Break*
+- **11:30–12:30** — Exercises: Predicting the future
+- **12:30–13:30** — *Lunch*
+- **13:30–14:15** — Lecture: Embedding the past
+- **14:15–14:30** — *Break*
+- **14:30–16:00** — Exercises: Embedding the past
+- **16:00–17:15** — Readings: Transformers represent belief geometry & Neural networks represent
+- **17:15–17:45** — Discussion
+- **17:45–18:00** — Feedback
+
 ## Slides
 
 The compiled decks can be opened directly:
