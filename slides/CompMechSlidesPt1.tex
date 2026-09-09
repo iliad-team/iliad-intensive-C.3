@@ -2,6 +2,8 @@
 % Build from this directory: latexmk -pdf -outdir=build CompMechSlidesPt1.tex
 \documentclass[aspectratio=169,12pt,t]{beamer}
 \usepackage{iliad-slides}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,shapes.geometric,fit}
 \graphicspath{{figures/}}
 \title{Computational Mechanics}
 \subtitle{1. Overview \& Scope}
@@ -109,14 +111,33 @@
 \begin{frame}{Processes and generation resources}
   Fix a (computable) stochastic process and consider:
 
-  What resources are required to generate this process?
-  \begin{center}\evidenceimage[44mm]{hierarchy}\end{center}
+  What resources are required to generate this process? This naturally leads
+  to a hierarchy:
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.36\textwidth}
+      \centering\resizebox{!}{38mm}{\input{figures/hierarchy.tex}}\\[1mm]
+      {\footnotesize $*$ not exhaustive}
+    \end{column}
+    \begin{column}{0.60\textwidth}
+      \vspace{4mm}
+      {\small\input{figures/hierarchy-key.tex}}
+    \end{column}
+  \end{columns}
 \end{frame}
 
 \begin{frame}{Processes and optimal prediction}
   For what classes of data generating \keyterm{processes} do we understand
   optimal prediction?
-  \begin{center}\evidenceimage[48mm]{hierarchy_green}\end{center}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.36\textwidth}
+      \centering\resizebox{!}{42mm}{\input{figures/hierarchy_green.tex}}\\[1mm]
+      {\footnotesize $*$ not exhaustive}
+    \end{column}
+    \begin{column}{0.60\textwidth}
+      \vspace{4mm}
+      {\small\input{figures/hierarchy-key.tex}}
+    \end{column}
+  \end{columns}
 \end{frame}
 
 % 12. All four quantities share an aligned column and an explicit unit.
@@ -166,7 +187,7 @@
 
 \begin{frame}{The research frontier}
   We are working to push the Pareto frontier:
-  \begin{center}\evidenceimage[53mm]{pareto}\end{center}
+  \begin{center}\resizebox{!}{53mm}{\input{figures/pareto.tex}}\end{center}
 \end{frame}
 
 % 15 (original 14). Preserve diagram and qualification without obscuring data.
@@ -175,7 +196,7 @@
   \vspace{1mm}
   \begin{columns}[T,onlytextwidth]
     \begin{column}{0.49\textwidth}
-      \centering\evidenceimage[51mm]{pareto}
+      \centering\resizebox{!}{51mm}{\input{figures/pareto.tex}}
     \end{column}
     \begin{column}{0.46\textwidth}
       \vspace{3mm}
@@ -189,7 +210,7 @@
 
 \begin{frame}{Scope: what will we tackle today?}
   We will take a slightly narrower view and consider:
-  \begin{center}\evidenceimage[53mm]{scope}\end{center}
+  \begin{center}\resizebox{!}{53mm}{\input{figures/scope.tex}}\end{center}
 \end{frame}
 
 \begin{frame}{Plan}

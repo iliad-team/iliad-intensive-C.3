@@ -5,6 +5,8 @@
 \usepackage[margin=19mm,headheight=14pt,headsep=6mm,footskip=10mm]{geometry}
 \usepackage{graphicx,booktabs,tabularx,xcolor,fancyhdr}
 \usepackage[colorlinks=true,urlcolor=blue!40!black]{hyperref}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,shapes.geometric,fit}
 \graphicspath{{figures/}}
 \definecolor{accent}{HTML}{255C6A}
 \setlength{\parindent}{0pt}
@@ -86,7 +88,14 @@ For what classes of data generating \textbf{processes} do we understand
 optimal prediction? Fix a (computable) stochastic process and consider:
 what resources are required to generate this process? This naturally leads
 to a hierarchy:
-\fig{62mm}{hierarchy_green}
+\begin{center}
+\begin{minipage}[c]{0.38\linewidth}
+\centering\resizebox{!}{62mm}{\input{figures/hierarchy_green.tex}}
+\end{minipage}\hfill
+\begin{minipage}[c]{0.58\linewidth}
+\input{figures/hierarchy-key.tex}
+\end{minipage}
+\end{center}
 {\small The source diagram marks the region of understood prediction in green
 and labels the hierarchy as non-exhaustive.\par}
 
@@ -116,11 +125,11 @@ view and consider:
 \begin{center}
 \begin{minipage}[t]{0.40\linewidth}
 \centering
-\includegraphics[width=\linewidth,height=65mm,keepaspectratio]{pareto}
+\resizebox{\linewidth}{!}{\input{figures/pareto.tex}}
 \end{minipage}\hfill
 \begin{minipage}[t]{0.56\linewidth}
 \centering
-\includegraphics[width=\linewidth,height=65mm,keepaspectratio]{scope}
+\resizebox{\linewidth}{!}{\input{figures/scope.tex}}
 \end{minipage}
 \end{center}
 
