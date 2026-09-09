@@ -14,7 +14,7 @@ Python notebooks.
 - **13:30–14:15** — Lecture: Embedding the past
 - **14:15–14:30** — *Break*
 - **14:30–16:00** — Exercises: Embedding the past
-- **16:00–17:15** — Readings: Transformers represent belief geometry & Neural networks represent
+- **16:00–17:15** — Readings: Transformers represent belief geometry
 - **17:15–17:45** — Discussion
 - **17:45–18:00** — Feedback
 
