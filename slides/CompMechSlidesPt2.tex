@@ -62,7 +62,7 @@
   The \textbf{possible histories} are the words that can occur:
   \[
     \mathcal X_+^*
-      =\left\{x\in\mathcal X^*: \Pr(X_{1:|x|}=x)>0\right\}.
+      =\left\{x\in\mathcal X^*\mid \Pr(X_{1:|x|}=x)>0\right\}.
   \]
 
   \vspace{3mm}
@@ -493,7 +493,7 @@
   \vspace{3mm}
   \begin{itemize}
     \setlength{\itemsep}{3mm}
-    \item Causal states are the \textbf{best summary of the past}.
+    \item Causal states are the \textbf{most efficient summary of the past}.
     \item Given a new observation, the causal state is \textbf{easy to update}.
   \end{itemize}
 
@@ -508,7 +508,7 @@
     \par}
   \vfill
 
-  \note{Here, ``best'' means minimal sufficient for predicting the full
+  \note{Here, ``most efficient'' means minimal sufficient for predicting the full
   continuation law. The deterministic update established above makes this
   summary easy to maintain as observations arrive. The contrast motivates the
   next question: if a model is trained only on next-token probabilities, which
@@ -518,27 +518,26 @@
 \begin{frame}{Recurrent next-token prediction}
   \setlength{\parskip}{0pt}
   \vfill
-  Consider a model with parameters $\theta$ that, given hidden state $h_n$ and
-  observation $x_{n+1}$, recurrently updates its hidden state and produces the
-  prediction $y_{n+1}$:
+  Given hidden state $h_{n-1}$ and observation $x_n$, a model with parameters
+  $\theta$ recurrently updates its hidden state and produces prediction $y_n$:
 
   \vspace{-3mm}
   \[
-    h_{n+1}=f_\theta(h_n,x_{n+1}),
+    h_n=f_\theta(h_{n-1},x_n),
     \qquad
-    y_{n+1}=g_\theta(h_n,x_{n+1}).
+    y_n=g_\theta(h_{n-1},x_n).
   \]
 
   \textbf{Proposition.} Fix the initial hidden state $h_0$. Suppose that, for
-  every $n\geq 0$,
+  every $n\geq 1$,
   \[
-    y_{n+1}
+    y_n
       =\Pr\!\left(
-        X_{n+2}\mid X_{1:n+1}=x_{1:n+1}
+        X_{n+1}\mid X_{1:n}=x_{1:n}
       \right),
-      \qquad \forall\,x_{1:n+1}\in\mathcal X_+^*.
+      \qquad \forall\,x_{1:n}\in\mathcal X_+^*.
   \]
-  Then the recurrent state $(h_n,x_{n+1})$ is a sufficient statistic for the
+  Then the recurrent state $(h_{n-1},x_n)$ is a sufficient statistic for the
   entire future.
 
   \vfill
@@ -557,12 +556,12 @@
   \vfill
 
   \note{The indexing emphasizes the Mealy timing convention. The hidden state
-  h_n summarizes the observations through x_n. When x_{n+1} arrives, the same
-  state--input pair produces both the updated hidden state h_{n+1} and the
-  distribution used to predict X_{n+2}. The dot indicates that y_{n+1} is the
+  h_{n-1} summarizes the observations through x_{n-1}. When x_n arrives, the same
+  state--input pair produces both the updated hidden state h_n and the
+  distribution used to predict X_{n+1}. The dot indicates that y_n is the
   whole probability distribution on the finite alphabet, rather than a single
   probability or an argmax prediction. The proposition applies to the pair
-  $(h_n,x_{n+1})$, which is the predictive state in the Mealy convention and
+  $(h_{n-1},x_n)$, which is the predictive state in the Mealy convention and
   is itself recurrently updated.}
 \end{frame}
 
@@ -638,7 +637,7 @@
       \setlength{\fboxrule}{0.6pt}
       \fcolorbox{iliadAccent}{iliadAccent!6}{%
         \parbox{0.82\textwidth}{\centering
-          \textbf{Exact Transformer next-token prediction}\\[1mm]
+          Transformer with \textbf{exact next-token prediction}\\[1mm]
           $\Longrightarrow\quad (h_n,x_{n+1})$ is sufficient for
           \textbf{the entire future!}}}
       \par}
@@ -705,7 +704,7 @@
 
   \vspace{2mm}
   \begin{itemize}
-    \item Causal states are the \textbf{best summary of the past}.
+    \item Causal states are the \textbf{most efficient summary of the past}.
     \item Given a new observation, the causal state is \textbf{easy to update}.
   \end{itemize}
 
@@ -718,7 +717,7 @@
       next-token prediction develop \textbf{sufficient statistics} for the
       entire future.
     \item Simplicity bias suggests that these learned statistics may approach
-      the \textbf{causal states}.
+      \textbf{minimal sufficient statistics}.
   \end{itemize}
 
   \vfill
