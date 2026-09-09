@@ -26,31 +26,32 @@
   \end{enumerate}
 \end{frame}
 
-% 3. Keep the two explanations and examples in the same view.
+% 3. Compare the two fields using the original macrostate and predictive-state graphics.
 \begin{frame}{What is Computational Mechanics?}
   \begingroup\small
   \keyterm{Statistical Mechanics} makes predictions about the behaviour of
-  systems by considering their \keyterm{statistical} properties. E.g.\par\endgroup
+  systems by considering their \keyterm{statistical} properties:\par\endgroup
   \vspace{-1mm}
-  \begin{center}\evidenceimage[17mm]{statmech}\end{center}
+  \begin{center}\evidenceimage[17mm]{statmech-reference}\end{center}
   \vspace{-2mm}
   {\small
-  \keyterm{Computational Mechanics} (comp-mech) makes predictions about the
-  behaviour of systems by considering their \keyterm{computational} properties. E.g.\par}
+  \keyterm{Computational Mechanics} makes predictions about the behaviour of
+  systems by considering their \keyterm{computational} properties:\par}
   \vspace{-1mm}
-  \begin{center}\evidenceimage[20mm]{compmech}\end{center}
+  \begin{center}\evidenceimage[20mm]{compmech-reference}\end{center}
 \end{frame}
 
 % 4. Questions are complete sentences, with no unnecessary hierarchy.
-\begin{frame}{Information stored by a system}
+\begin{frame}{Central questions}
   Some questions that are central to comp-mech:
   \vspace{3mm}
 
-  How much of the past does a system store?
-
-  How does the system store this information?
-
-  How does this information affect system behaviour?
+  \begin{itemize}
+    \setlength{\itemsep}{2mm}
+    \item How much of the past does a system store?
+    \item How does the system store this information?
+    \item How does this information affect system behaviour?
+  \end{itemize}
   \vspace{4mm}
 
   We will consider each of these questions for transformers today!
@@ -61,8 +62,13 @@
   performing \keyterm{optimal prediction}. In this setting the central question becomes:
   \vspace{5mm}
 
-  {\large\color{iliadAccent}What are convergent structures relevant for
-  optimal prediction?\par}
+  {\centering
+    \setlength{\fboxsep}{3mm}
+    \setlength{\fboxrule}{0.6pt}
+    \fcolorbox{iliadAccent}{iliadAccent!6}{%
+      \parbox{0.88\textwidth}{\centering
+        What are convergent structures relevant for \textbf{optimal prediction}?}}
+    \par}
   \vspace{5mm}
 
   Insight on this question greatly constrains our search space when
@@ -96,16 +102,18 @@
 
 \begin{frame}{The research program}
   Comp-mech applied to AI safety is a young research program
-  ($\sim$2 years). There is much to do!
+  ($\sim$2.5 years). There is much to do!
 
   Progress can be broken down into two orthogonal directions:
   \vspace{2mm}
 
-  For what classes of data generating \keyterm{processes} do we understand
-  optimal prediction?
-
-  For what scale of \keyterm{neural networks} have we identified the
-  structures of optimal prediction?
+  \begin{itemize}
+    \setlength{\itemsep}{3mm}
+    \item For what classes of data generating \keyterm{processes} do we
+      understand optimal prediction?
+    \item For what scale of \keyterm{neural networks} have we identified the
+      structures of optimal prediction?
+  \end{itemize}
 \end{frame}
 
 \begin{frame}{Processes and generation resources}
@@ -218,8 +226,8 @@
   {\small
   \renewcommand{\arraystretch}{1.5}
   \begin{tabularx}{\linewidth}{@{}r@{\hspace{3mm}}X@{\hspace{3mm}}l@{}}
-    1 & Predicting the future & Lecture/exercises\\
-    2 & Representing the past & Lecture/exercises\\
+    1 & Predicting the future & Lecture/Exercises\\
+    2 & Representing the past & Lecture/Exercises\\
     3 & Belief geometry in transformers & Reading/Discussion\\
   \end{tabularx}
   \par}
