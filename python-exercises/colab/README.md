@@ -31,10 +31,10 @@ These are generated from the canonical sources by
 editing the exercises or helper modules:
 
 ```bash
-cd ..            # exercises
+cd ..            # python-exercises
 python build_notebooks.py
 ```
 
 To emit an "Open in Colab" badge once the notebooks are hosted, set
-`COLAB_BADGE_REPO = "owner/repo/blob/branch/exercises/colab"` near
+`COLAB_BADGE_REPO = "owner/repo/blob/branch/python-exercises/colab"` near
 the top of `build_notebooks.py` and regenerate.

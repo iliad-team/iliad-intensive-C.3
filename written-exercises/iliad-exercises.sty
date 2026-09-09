@@ -1,0 +1,121 @@
+% ILIAD teaching handouts. A companion style for exercises and solutions.
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{iliad-exercises}[2026/09/07 ILIAD exercise sheets]
+
+\newif\ifiliadsolutions
+\iliadsolutionsfalse
+\DeclareOption{solutions}{\iliadsolutionstrue}
+\ProcessOptions\relax
+
+\RequirePackage[T1]{fontenc}
+\RequirePackage{lmodern}
+\RequirePackage{microtype}
+\RequirePackage{amsmath,amssymb,mathtools}
+\RequirePackage[a4paper,margin=22mm,headheight=15pt,headsep=7mm,footskip=11mm]{geometry}
+\RequirePackage{xcolor}
+\RequirePackage{fancyhdr}
+\RequirePackage{enumitem}
+\RequirePackage[colorlinks=true]{hyperref}
+
+\definecolor{iliadInk}{HTML}{20262A}
+\definecolor{iliadAccent}{HTML}{255C6A}
+\definecolor{iliadMuted}{HTML}{525D62}
+\definecolor{iliadTint}{HTML}{EEF3F4}
+
+\color{iliadInk}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+\setlist{itemsep=3pt,topsep=5pt}
+\setlist[enumerate,1]{label=(\alph*),leftmargin=9mm}
+\setlist[enumerate,2]{label=(\roman*),leftmargin=8mm}
+\hypersetup{linkcolor=iliadAccent,urlcolor=iliadAccent,citecolor=iliadAccent}
+
+\providecommand{\iliadcourse}{Computational Mechanics}
+\providecommand{\iliadpart}{2. Predicting the future}
+\providecommand{\iliadterm}{Autumn 2026}
+\providecommand{\iliadinstitute}{ILIAD Intensive}
+\providecommand{\iliadauthor}{Xavier Poncini}
+\providecommand{\iliadhandout}{Exercise sheet}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\iliadcourse: \iliadpart}
+\fancyhead[R]{\small\iliadhandout}
+\fancyfoot[L]{\footnotesize\color{iliadMuted}\iliadinstitute\ · \iliadterm}
+\fancyfoot[R]{\footnotesize\color{iliadMuted}\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\fancypagestyle{iliadfirst}{%
+  \fancyhf{}
+  \fancyfoot[L]{\footnotesize\color{iliadMuted}\iliadinstitute\ · \iliadterm}
+  \fancyfoot[R]{\footnotesize\color{iliadMuted}\thepage}
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0pt}}
+
+\newcommand{\makeiliadhandouttitle}{%
+  \thispagestyle{iliadfirst}
+  {\small\color{iliadAccent}\bfseries\iliadinstitute\hfill\iliadterm\par}
+  \vspace{7mm}
+  {\LARGE\bfseries\iliadcourse\par}
+  \vspace{1mm}
+  {\Large\iliadpart\par}
+  \vspace{3mm}
+  {\large\color{iliadAccent}\bfseries\iliadhandout\par}
+  \vspace{1mm}
+  {\small\color{iliadMuted}\iliadauthor\par}
+  \vspace{3mm}
+  {\color{iliadAccent}\rule{\linewidth}{0.8pt}\par}
+  \vspace{1mm}}
+
+\NewDocumentEnvironment{instructions}{+b}{%
+  \begin{center}
+    \setlength{\fboxsep}{4mm}%
+    \colorbox{iliadTint}{%
+      \begin{minipage}{0.91\linewidth}
+        {\bfseries Instructions}\par\smallskip
+        #1
+      \end{minipage}}
+  \end{center}
+  \vspace{0mm}}{}
+
+\newcounter{exercise}
+\NewDocumentEnvironment{exercise}{O{}m}{%
+  \refstepcounter{exercise}
+  \par\addvspace{4mm}
+  {\Large\bfseries\color{iliadAccent}Exercise \theexercise}
+  \if\relax\detokenize{#1}\relax\else
+    \hfill{\small\bfseries\color{iliadMuted}#1}%
+  \fi
+  \par\vspace{1mm}
+  {\large\bfseries #2\par}
+  \vspace{1mm}
+}{\par\addvspace{3mm}}
+
+\NewDocumentEnvironment{parts}{}{\begin{enumerate}}{\end{enumerate}}
+\NewDocumentEnvironment{subparts}{}{\begin{enumerate}}{\end{enumerate}}
+
+\NewDocumentCommand{\studentonly}{+m}{\ifiliadsolutions\else#1\fi}
+\NewDocumentCommand{\solutiononly}{+m}{\ifiliadsolutions#1\fi}
+\NewDocumentCommand{\answerspace}{m}{\ifiliadsolutions\else\vspace{#1}\fi}
+
+\NewDocumentEnvironment{solution}{+b}{%
+  \ifiliadsolutions
+    \par\addvspace{2mm}
+    {\color{iliadAccent}\rule{\linewidth}{0.5pt}\par}
+    \vspace{1mm}
+    {\bfseries\color{iliadAccent}Solution.}\par
+    \begingroup
+      \setlength{\leftskip}{5mm}
+      \setlength{\rightskip}{3mm}
+      #1\par
+    \endgroup
+    \vspace{1mm}
+    {\color{iliadAccent!45}\rule{\linewidth}{0.4pt}\par}
+  \fi
+}{}
+
+\newcommand{\sheetnote}[1]{%
+  \par\medskip{\small\color{iliadMuted}\textit{#1}\par}}
+
+\endinput

@@ -1,0 +1,61 @@
+% Copy this file to begin a module. Keep iliad-slides.sty beside it.
+% This specimen illustrates authoring patterns; it is not part of Part 1.
+\documentclass[aspectratio=169,12pt,t]{beamer}
+\usepackage{iliad-slides}
+\title{Module title}
+\subtitle{Part number. Topic}
+\institute{ILIAD Intensive}
+\date{Course date}
+\author{Xavier Poncini (Simplex)}
+\begin{document}
+\iliadtitle
+
+\begin{frame}{An explanation with its supporting evidence}
+  A complete sentence states the relationship the audience should examine.
+  Keep the assumptions and qualifications next to that relationship.
+  \vspace{3mm}
+  \begin{columns}[T,onlytextwidth]
+    \begin{column}{0.60\textwidth}
+      \slidelabel{Evidence}
+      Place an original figure, derivation, or measured result here.
+
+      Keep labels legible and show the quantities needed for comparison
+      in the same view.
+    \end{column}
+    \begin{column}{0.35\textwidth}
+      \slidelabel{Interpretation}
+      Explain how the evidence supports the claim.
+
+      State any limitation that changes the conclusion at body size.
+    \end{column}
+  \end{columns}
+  \source{Author, work, year, page or figure. Use a DOI or stable link when available.}
+\end{frame}
+
+\begin{frame}{A mathematical relationship with its assumptions}
+  For discrete random variables $X$ and $Y$, Bayes' rule gives
+  \[
+    p(x\mid y)=\frac{p(y\mid x)\,p(x)}{p(y)},\qquad p(y)>0.
+  \]
+  The prior $p(x)$ and likelihood $p(y\mid x)$ determine the posterior
+  $p(x\mid y)$. The denominator normalises the distribution.
+
+  \qualification{The condition $p(y)>0$ belongs beside the formula.}
+\end{frame}
+
+\begin{frame}{Comparable quantities in a single table}
+  Put the unit in the column heading and align comparable values.
+  \vspace{3mm}
+
+  \begin{tabular*}{0.9\linewidth}{@{}l@{\extracolsep{\fill}}rr@{}}
+    \toprule
+    Model & Parameters (count) & Measurement uncertainty\\
+    \midrule
+    Example A & \textit{value} & \textit{interval or qualifier}\\
+    Example B & \textit{value} & \textit{interval or qualifier}\\
+    \bottomrule
+  \end{tabular*}
+  \qualification{These are placeholders, not experimental results.}
+  \source{Replace with the source and the conditions of measurement.}
+\end{frame}
+\end{document}

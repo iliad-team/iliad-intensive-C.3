@@ -4,3 +4,15 @@ __pycache__/
 *.html
 .venv/
 .DS_Store
+
+# LaTeX build artefacts (compiled teaching PDFs are tracked explicitly).
+build/
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.nav
+*.out
+*.snm
+*.synctex.gz
+*.toc
