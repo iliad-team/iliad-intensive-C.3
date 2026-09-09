@@ -1,0 +1,76 @@
+% Copy this file to begin a guided reading handout.
+% Keep iliad-reading-guide.sty beside it and replace the specimen content.
+\documentclass[11pt]{article}
+\newcommand{\iliadpart}{Part number. Topic}
+\newcommand{\iliadhandout}{Reading guide}
+\usepackage{iliad-reading-guide}
+
+\hypersetup{
+  pdftitle={Computational Mechanics: reading guide template},
+  pdfauthor={Xavier Poncini}
+}
+
+\begin{document}
+\makeiliadreadingtitle
+
+Open with one short paragraph that connects the session to the material
+participants have already covered and states what they will do next.
+
+\begin{sessionplan}
+  \begin{enumerate}[nosep]
+    \item \textbf{Readings (duration).} State the priority order and where to
+      find the reading route.
+    \item \textbf{Discussion (duration).} State the group size and purpose.
+  \end{enumerate}
+\end{sessionplan}
+
+\guideheading{Readings}
+Explain how to prioritise the readings and how participants can check their
+understanding.
+
+\begin{reading}[Main]{Paper title}{https://example.com}
+  \begin{readingroute}
+    \routeitem{Skim}{Sections to orient the reader.}
+    \routeitem{Read}{Sections requiring close attention.}
+    \routeitem{Evaluation}{A concrete question that tests the central idea.}
+  \end{readingroute}
+
+  \readingoverview{Give just enough context to make the selected sections
+  intelligible. Keep claims, qualifications, and the evidence that supports
+  them together.}
+\end{reading}
+
+\newpage
+\begin{reading}[Extension]{Paper title}{https://example.com}
+  \begin{readingroute}
+    \routeitem{Skim}{Optional orientation sections.}
+    \routeitem{Read}{The most relevant extension sections.}
+    \routeitem{Evaluation}{A question that exposes the connection to the main
+      reading.}
+  \end{readingroute}
+
+  \readingoverview{Explain what the extension adds and why it matters for the
+  course's argument.}
+\end{reading}
+
+\guideheading{Discussion}
+Use a small set of open prompts that ask participants to distinguish evidence,
+interpretation, limitations, and alternative explanations.
+\begin{itemize}
+  \item What is the strongest piece of evidence?
+  \item What remains uncertain?
+  \item What experiment would discriminate between competing explanations?
+\end{itemize}
+
+\guideheading{Supporting evidence}
+\begin{center}
+  \setlength{\fboxsep}{0pt}
+  \fcolorbox{iliadAccent!55}{iliadTint}{%
+    \parbox[c][42mm][c]{0.86\linewidth}{\centering
+      Replace this box with a legible figure, table, or compact derivation.}}
+\end{center}
+\guidenote{Keep the interpretation and any limitation beside the evidence.
+Give the source, figure or page number, and a stable link where available.}
+
+\guidenote{Replace all specimen text before distributing the guide.}
+\end{document}
