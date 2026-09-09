@@ -6,14 +6,14 @@ Python notebooks.
 
 ## Schedule
 
-- **10:00–10:30** — Lecture: Overview and scope
-- **10:30–11:15** — Lecture: Predicting the future
+- **10:00–10:30** — [Lecture: Overview and scope](slides/CompMechSlidesPt1.pdf)
+- **10:30–11:15** — [Lecture: Predicting the future](slides/CompMechSlidesPt2.pdf)
 - **11:15–11:30** — *Break*
-- **11:30–12:30** — Exercises: Predicting the future
+- **11:30–12:30** — [Exercises: Predicting the future](written-exercises/CompMechExercisesPt2.pdf)
 - **12:30–13:30** — *Lunch*
-- **13:30–14:15** — Lecture: Embedding the past
+- **13:30–14:15** — [Lecture: Embedding the past](slides/CompMechSlidesPt3.pdf)
 - **14:15–14:30** — *Break*
-- **14:30–16:00** — Exercises: Embedding the past
+- **14:30–16:00** — [Exercises: Embedding the past](python-exercises/part2_belief_states_exercises.ipynb)
 - **16:00–17:15** — Readings: Transformers represent belief geometry
 - **17:15–17:45** — Discussion
 - **17:45–18:00** — Feedback
@@ -25,7 +25,6 @@ The compiled decks can be opened directly:
 - [Part 1 — Computational mechanics](slides/CompMechSlidesPt1.pdf)
 - [Part 2 — Predicting the future](slides/CompMechSlidesPt2.pdf)
 - [Part 3 — Representing the past](slides/CompMechSlidesPt3.pdf)
-- [Part 1 reader](slides/CompMechPt1-reader.pdf)
 
 Editable LaTeX sources, figures, build instructions, and a reusable starter
 template are in [`slides/`](slides/).
