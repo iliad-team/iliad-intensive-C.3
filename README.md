@@ -59,10 +59,10 @@ collapsible solutions) and a fully worked **solutions** notebook.
 
 | Notebook | Open in Colab |
 | --- | --- |
-| **Part 1 — Sequence probabilities & next-token distributions** (exercises) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/14xp/iliad-comp-mech-materials/blob/main/python-exercises/colab/part1_sequence_probabilities_exercises_colab.ipynb) |
-| Part 1 (solutions) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/14xp/iliad-comp-mech-materials/blob/main/python-exercises/colab/part1_sequence_probabilities_solutions_colab.ipynb) |
-| **Part 2 — Belief states** (exercises) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/14xp/iliad-comp-mech-materials/blob/main/python-exercises/colab/part2_belief_states_exercises_colab.ipynb) |
-| Part 2 (solutions) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/14xp/iliad-comp-mech-materials/blob/main/python-exercises/colab/part2_belief_states_solutions_colab.ipynb) |
+| **Part 1 — Sequence probabilities & next-token distributions** (exercises) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/iliad-team/iliad-intensive-C.3/blob/main/python-exercises/colab/part1_sequence_probabilities_exercises_colab.ipynb) |
+| Part 1 (solutions) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/iliad-team/iliad-intensive-C.3/blob/main/python-exercises/colab/part1_sequence_probabilities_solutions_colab.ipynb) |
+| **Part 2 — Belief states** (exercises) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/iliad-team/iliad-intensive-C.3/blob/main/python-exercises/colab/part2_belief_states_exercises_colab.ipynb) |
+| Part 2 (solutions) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/iliad-team/iliad-intensive-C.3/blob/main/python-exercises/colab/part2_belief_states_solutions_colab.ipynb) |
 
 The Colab notebooks are self-contained: their setup cells write the helper
 modules into the session, so there is nothing else to install or download.

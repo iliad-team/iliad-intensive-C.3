@@ -316,7 +316,7 @@ COLAB_MODULES = ["processes", "solutions", "tests", "plotting"]
 
 # Set to "owner/repo/blob/branch/path-to-colab-dir" to emit working per-notebook
 # "Open in Colab" badges. None -> instructions only (Colab can also open via Upload).
-COLAB_BADGE_REPO = "14xp/iliad-comp-mech-materials/blob/main/python-exercises/colab"
+COLAB_BADGE_REPO = "iliad-team/iliad-intensive-C.3/blob/main/python-exercises/colab"
 
 COLAB_SETUP_IMPORTS = '''# Best-effort auto-reload of the helper modules written above (silently skipped
 # where IPython's autoreload extension is unavailable, e.g. some Colab 3.12 images).
