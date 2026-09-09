@@ -14,7 +14,7 @@ Python notebooks.
 - **13:30–14:15** — [Lecture: Embedding the past](slides/CompMechSlidesPt3.pdf)
 - **14:15–14:30** — *Break*
 - **14:30–16:00** — [Exercises: Embedding the past](written-exercises/CompMechExercisesPt3.pdf)
-- **16:00–17:45** — [Reading & Discussion: Transformers represent belief geometry & Neural networks represent](output/pdf/CompMechReadingGuidePt4.pdf)
+- **16:00–17:45** — [Reading & Discussion: Identifying belief geometry in transformers](output/pdf/CompMechReadingGuidePt4.pdf)
 - **17:45–18:00** — Feedback
 
 ## Slides
