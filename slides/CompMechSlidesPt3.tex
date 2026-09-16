@@ -30,37 +30,9 @@
     \setlength{\itemsep}{4mm}
     \item Hidden Markov models
     \item Belief states and next-token prediction
-    \item Sufficient statistics and belief-state minimality
+    \item Sufficient statistics
     \item Generalised HMMs and minimal-dimensional realisations
   \end{enumerate}
-\end{frame}
-
-\begin{frame}{Representing the past for prediction}
-  \setlength{\parskip}{0pt}
-  \vfill
-  Last lecture, we established that RNNs and transformers that achieve
-  \textbf{exact next-token prediction} develop sufficient statistics for the
-  \textbf{entire future}.
-
-  \vspace{9mm}
-  In this lecture, we will study \textbf{hidden Markov models} and their
-  generalisations. We will construct belief states and next-token vectors,
-  then determine when belief states are \textbf{minimal sufficient statistics}.
-
-  \vspace{9mm}
-  The answer will suggest the kinds of internal representations that neural
-  networks trained on such data might learn.
-  \vfill
-
-  \note{The recap retains the recurrent-state assumptions from Part 2.
-  Sufficiency concerns the model's full predictive state, rather than an
-  arbitrary activation at a single layer or position. Exact prediction is
-  required across supported histories. The lecture constructs belief states,
-  distinguishes them from next-token vectors, and then uses minimal GHMM
-  realisations to study when belief states are minimal sufficient statistics.
-  This result motivates, but does not prove, the hypothesis that neural
-  networks trained on these processes learn analogous internal
-  representations. The reading session examines evidence for that hypothesis.}
 \end{frame}
 
 \begin{frame}{What is a hidden Markov model?}
@@ -660,8 +632,8 @@
   \[
     T\phi=\phi,\qquad
     \eta^{(\emptyset)}\phi=1,\qquad
-    \eta^{(\emptyset)}T^{(w)}\phi\geq 0
-      \quad\text{for every }w\in\mathcal X^*.
+    \eta^{(\emptyset)}T^{(x_1)}\cdots T^{(x_n)}\phi\geq 0
+      \quad\text{for every }x_{1:n}\in\mathcal X^*.
   \]
 
   These conditions ensure that the probability of any observed sequence is
@@ -826,6 +798,10 @@
   these objects. {\color{iliadMuted}\itshape
     (We will examine supporting evidence in the reading session.)}
 
+  \vfill
+  \source{Park, Choe \& Veitch, \textit{The Linear Representation Hypothesis
+  and the Geometry of Large Language Models} (ICML 2024); Elhage et al.,
+  \textit{Toy Models of Superposition} (Anthropic, 2022).}
   \vfill
 
   \note{Predictive minimality is minimality of a statistic for the future
