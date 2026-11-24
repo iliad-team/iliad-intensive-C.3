@@ -118,9 +118,9 @@
     \end{tikzpicture}\par}
   \vfill
 
-  \source{Moore-type HMMs emit from states; Mealy-type HMMs emit on
-  transitions. They describe the same processes, but may require different
-  numbers of hidden states.}
+  \source{Moore-type HMMs emit from states and Mealy-type HMMs emit on
+  transitions. A Moore-type HMM may require more hidden states than a
+  Mealy-type HMM to represent the same process.}
 
   \note{Adapted from the formal definition on slide 5 of the original
   Part 2 deck. State labels use i,j. In the displayed conditional,
@@ -552,6 +552,11 @@
     \begin{pmatrix}
       0 & \tfrac12 \\
       0 & \tfrac12
+    \end{pmatrix},
+    \qquad
+    \mathbf1^\top=
+    \begin{pmatrix}
+      1 \\ 1
     \end{pmatrix}.
   \]
 
@@ -711,18 +716,15 @@
 
 \begin{frame}{When HMM belief states are minimal}
   \setlength{\parskip}{0pt}
-  \setlength{\abovedisplayskip}{3pt}
-  \setlength{\belowdisplayskip}{3pt}
-  \only<2>{%
-    \setlength{\abovedisplayskip}{5pt}%
-    \setlength{\abovedisplayshortskip}{5pt}%
-    \setlength{\belowdisplayskip}{5pt}%
-    \setlength{\belowdisplayshortskip}{5pt}}
+  \setlength{\abovedisplayskip}{5pt}
+  \setlength{\abovedisplayshortskip}{5pt}
+  \setlength{\belowdisplayskip}{5pt}
+  \setlength{\belowdisplayshortskip}{5pt}
   If an HMM is minimal-dimensional among all GHMM realisations of its process,
   then its belief state is a \textbf{minimal sufficient statistic} for
   prediction.
 
-  \alt<2>{\vfill}{\vspace{2mm}}
+  \vfill
   Suppose two supported histories $x_{1:n}$ and $x'_{1:n'}$ predict every
   continuation identically.
   Then, for every $y_{1:m}$,
@@ -734,32 +736,21 @@
     =0.
   \]
 
-  \alt<2>{\vfill}{\vspace{1mm}}
-  \only<1>{%
-    Minimal-dimensionality implies that the future vectors
-    \[
-      T^{(y_1)}\cdots T^{(y_m)}\mathbf1^\top
-    \]
-    span the entire column space. Therefore,
-    \[
-      \eta^{(x_{1:n})}=\eta^{(x'_{1:n'})}.
-    \]}%
-  \only<2>{%
-    Minimal dimensionality gives $\dim\mathcal F=d$. Choose $d$ linearly
-    independent future vectors as the columns of $V$. Then $V$ has
-    \textbf{trivial left kernel}, so
-    \[
-      \bigl(\eta^{(x_{1:n})}-\eta^{(x'_{1:n'})}\bigr)V=0
-      \quad\Longrightarrow\quad
-      \eta^{(x_{1:n})}=\eta^{(x'_{1:n'})}.
-    \]}
+  \vfill
+  Let $V$ collect the future vectors, one column per $y\in\mathcal X^*$.
+  Minimality gives $V$ full row rank ($\dim\mathcal F=d$), hence $V$ has a \textbf{trivial left kernel}.
+  \[
+    \bigl(\eta^{(x_{1:n})}-\eta^{(x'_{1:n'})}\bigr)V=\mathbf{0}
+    \quad\Longrightarrow\quad
+    \eta^{(x_{1:n})}=\eta^{(x'_{1:n'})}.
+  \]
 
   \vfill
   Thus, histories have the same belief state precisely when they have the
   same distribution over the future. The belief state is
   \textbf{minimal sufficient}.
 
-  \alt<2>{\vfill}{\vspace{-1mm}}
+  \vfill
   \source{Based on Upper (1997), Sections 4.2--4.3.}
   \vfill
 

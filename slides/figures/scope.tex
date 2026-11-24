@@ -3,26 +3,14 @@
 % one picture so the slide keeps a single \input.
 \begin{tikzpicture}[
   ring/.style={draw=black!62,line width=.7pt},
-  ghmm/.style={fill=green!62},
+  ghmm fill/.style={fill=green!62},
   unit/.style={draw,fill=black!8,minimum width=11mm,minimum height=8mm,
                inner sep=1pt,font=\small},
   wire/.style={draw,line width=.6pt},
 ]
   % ---- processes: the shaded class is the one we tackle ----
   \begin{scope}[shift={(0,0)}]
-    \draw[ring] (0,2.50) ellipse[x radius=2.20, y radius=2.50];
-    \draw[ring] (0,2.15) ellipse[x radius=1.82, y radius=2.15];
-    \draw[ring] (0,1.81) ellipse[x radius=1.48, y radius=1.81];
-    \draw[ring,ghmm] (0,1.39) ellipse[x radius=1.16, y radius=1.39];
-    \draw[ring,dashed] (0,0.99) ellipse[x radius=0.94, y radius=0.99];
-    \draw[ring] (0,0.34) ellipse[x radius=0.56, y radius=0.34];
-    \node[font=\small] at (0,4.52) {PTM};
-    \foreach \y in {3.87,3.96,4.05}
-      \fill (0,\y) circle[radius=.55pt];
-    \node[font=\small] at (0,3.24) {PCFG};
-    \node[font=\small] at (0,2.36) {GHMM};
-    \node[font=\small] at (0,1.52) {HMM};
-    \node[font=\scriptsize] at (0,0.34) {IID};
+    \input{figures/hierarchy-rings.tex}
     \node[font=\small] at (0,5.35) {\underline{Processes}};
     \node[font=\small] at (0,-0.65) {GHMMs};
   \end{scope}

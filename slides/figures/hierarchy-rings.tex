@@ -1,0 +1,30 @@
+% All ellipses share the same bottom point. In the current deck the
+% four bands above IID each measure 1.08 units along the vertical axis.
+\ifdefined\historicalHierarchy
+  \def\hmmX{0.94}\def\hmmY{0.99}
+  \def\ghmmX{1.16}\def\ghmmY{1.39}
+  \def\intermediateX{1.82}\def\intermediateY{2.15}
+  \def\hmmLabel{1.52}\def\ghmmLabel{2.36}\def\ptmLabel{4.52}
+  \def\dotsHeight{3.96}
+\else
+  \def\hmmX{0.97}\def\hmmY{0.88}
+  \def\ghmmX{1.38}\def\ghmmY{1.42}
+  \def\intermediateX{1.79}\def\intermediateY{1.96}
+  \def\hmmLabel{1.22}\def\ghmmLabel{2.30}\def\ptmLabel{4.46}
+  \def\dotsHeight{3.38}
+\fi
+\draw[ring] (0,2.50) ellipse[x radius=2.20,y radius=2.50];
+\draw[ring] (0,\intermediateY) ellipse[x radius=\intermediateX,y radius=\intermediateY];
+\ifdefined\historicalHierarchy
+  \draw[ring] (0,1.81) ellipse[x radius=1.48,y radius=1.81];
+  \node[font=\small] at (0,3.24) {PCFG};
+\fi
+\draw[ring,ghmm fill/.try] (0,\ghmmY) ellipse[x radius=\ghmmX,y radius=\ghmmY];
+\draw[ring,dashed] (0,\hmmY) ellipse[x radius=\hmmX,y radius=\hmmY];
+\draw[ring] (0,0.34) ellipse[x radius=0.56,y radius=0.34];
+\node[font=\small] at (0,\ptmLabel) {PTM};
+\foreach \offset in {-0.09,0,0.09}
+  \fill (0,{\dotsHeight+\offset}) circle[radius=.55pt];
+\node[font=\small] at (0,\ghmmLabel) {GHMM};
+\node[font=\small] at (0,\hmmLabel) {HMM};
+\node[font=\scriptsize] at (0,0.34) {IID};
