@@ -1,0 +1,51 @@
+% The two frames share a layout so the highlighted path stays in place.
+\newcommand{\instrumentalgoalsdiagram}[1]{%
+  \begin{tikzpicture}[
+    goal/.style={minimum width=38mm,minimum height=6.8mm,inner sep=1pt,
+                 line width=.65pt,font=\small},
+    instrumental/.style={goal,draw=green!48!black,fill=green!6},
+    terminal/.style={goal,minimum width=29mm,draw=violet!80!black,fill=violet!8},
+    arrow/.style={-{Stealth[length=2mm,width=1.6mm]},line width=.8pt,
+                  shorten <=1.5mm,shorten >=1.5mm},
+    other goal/.style={instrumental},
+    other path/.style={draw=iliadInk},
+    other dots/.style={fill=iliadInk}
+  ]
+    \ifstrequal{#1}{prediction}{%
+      \tikzset{other goal/.style={goal,draw=black!27,fill=black!2,text=black!48},
+               other path/.style={draw=black!27},other dots/.style={fill=black!35}}%
+    }{}
+    \node[font=\small\bfseries] at (0,1.72) {Instrumental};
+    \node[font=\small\bfseries] at (4.45,.77) {Terminal};
+
+    % Robot with antenna, oval eyes, and segmented grille.
+    \begin{scope}[shift={(-4.65,0)},line width=.7pt]
+      \draw[draw=black!60,fill=black!6] (-.9,-.9) rectangle (.9,.9);
+      \draw (0,.9) -- (0,1.40);
+      \draw[draw=orange!90!black,fill=orange!12] (0,1.49)
+        ellipse[x radius=.14,y radius=.09];
+      \foreach \x in {-.46,.46}
+        \draw[draw=blue!55!black,fill=blue!9] (\x,.32)
+          ellipse[x radius=.26,y radius=.14];
+      \draw[draw=red!72!black,fill=red!12] (-.59,-.47) rectangle (.59,-.27);
+      \foreach \x in {-.36,-.12,.12,.36}
+        \draw[red!72!black] (\x,-.47) -- (\x,-.27);
+    \end{scope}
+
+    \node[other goal] (preserve) at (0,.96) {Self-preservation};
+    \node[other goal] (resources) at (0,0) {Resource acquisition};
+    \node[instrumental] (predict) at (0,-1.52) {Optimal prediction};
+    \path (resources.south) -- (predict.north) coordinate[midway] (gap);
+    \foreach \offset in {-1.3mm,0mm,1.3mm}
+      \fill[other dots] ([yshift=\offset]gap) circle[radius=.45pt];
+    \node[terminal] (clips) at (4.45,0) {More paperclips};
+
+    \draw[arrow,other path] (-3.75,.46) -- (preserve.west);
+    \draw[arrow,other path] (-3.75,0) -- (resources.west);
+    \draw[arrow] (-3.75,-.45) -- (predict.west);
+
+    \draw[arrow,other path] (preserve.east) -- (clips.166);
+    \draw[arrow,other path] (resources.east) -- (clips.west);
+    \draw[arrow] (predict.east) -- (clips.190);
+  \end{tikzpicture}%
+}

@@ -1,0 +1,55 @@
+% Capability progression, with a common baseline for all three captions.
+\begin{tikzpicture}[
+  head/.style={rounded corners=2mm,line width=.65pt},
+  wire/.style={line width=.85pt,line cap=round},
+  next/.style={-{Stealth[length=2mm,width=1.6mm]},draw=iliadInk,line width=.85pt},
+  caption/.style={font=\small,anchor=base,yshift=-2mm}
+]
+  % Prehuman-level: tilted casing, crossed-out eye, and a sparking antenna.
+  \begin{scope}[rotate=8]
+    \draw[wire,black!43] (-.16,.56) -- (-.36,1.02);
+    \fill[orange!58] (-.36,1.02) circle[radius=.07];
+    \draw[wire,orange!65] (.74,.28) -- (.91,.40) (.78,.16) -- (.91,.22);
+    \draw[head,draw=black!45,fill=black!17] (-.70,-.59) rectangle (.70,.59);
+    \draw[wire,red!36!gray] (-.44,-.03) -- (-.23,.17)
+                            (-.44,.17) -- (-.23,-.03);
+    \draw[draw=black!36,fill=white] (.32,.08) circle[radius=.14];
+    \fill[black!57] (.32,.08) circle[radius=.058];
+  \end{scope}
+  \node[caption] at (0,-1.00) {Prehuman-level};
+
+  % Human-level: blue face, green antenna, and a smile.
+  \begin{scope}[xshift=40mm]
+    \draw[wire,blue!55!cyan] (0,.58) -- (0,1.02);
+    \fill[green!65!cyan] (0,1.05) circle[radius=.09];
+    \draw[head,draw=blue!45!cyan,fill=blue!26!cyan!45] (-.72,-.59) rectangle (.72,.70);
+    \foreach \x in {-.28,.28}{
+      \draw[draw=blue!35!cyan,fill=white!88!cyan] (\x,.16) circle[radius=.145];
+      \fill[blue!52!black] (\x,.16) circle[radius=.065];
+    }
+    \draw[wire,blue!52!black] (-.24,-.22) .. controls (-.10,-.36) and (.10,-.36) .. (.24,-.22);
+  \end{scope}
+  \node[caption] at (4,-1.00) {Human-level};
+
+  % Superhuman-level: a crown, twin antennae, and a three-light visor.
+  \begin{scope}[xshift=80mm]
+    \fill[violet!6] (0,.17) circle[radius=1.02];
+    \foreach \side in {-1,1}{
+      \draw[wire,violet!70] (\side*.33,.94) -- (\side*.47,1.30);
+      \fill[orange!85!yellow] (\side*.47,1.30) circle[radius=.045];
+    }
+    \draw[draw=violet!80,fill=violet!45] (-.40,.60) -- (-.22,1.05)
+      -- (0,.76) -- (.22,1.05) -- (.40,.60) -- cycle;
+    \fill[orange!85!yellow] (0,.97) circle[radius=.068];
+    \draw[head,draw=violet!80,fill=violet!30] (-.72,-.64) rectangle (.72,.61);
+    \draw[rounded corners=1.8mm,draw=violet!90,line width=1.3pt,fill=violet!20]
+      (-.50,-.10) rectangle (.50,.23);
+    \foreach \x in {-.25,0,.25} \fill[white] (\x,.065) circle[radius=.058];
+  \end{scope}
+  \node[caption] at (8,-1.00) {Superhuman-level};
+
+  \draw[next] (1.12,.11) -- (3.03,.11);
+  \draw[next] (4.98,.11) -- (6.73,.11);
+  \draw[next] (9.25,.11) -- (10.94,.11);
+  \foreach \x in {11.28,11.46,11.64} \fill[iliadInk] (\x,.11) circle[radius=.65pt];
+\end{tikzpicture}

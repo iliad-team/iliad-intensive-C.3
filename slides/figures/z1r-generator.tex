@@ -1,17 +1,11 @@
 % Edge-emitting Zero--One--Random generator with Bernoulli(p) random phase.
 % Editable diagram; labels have the form emitted symbol : edge probability.
-\begin{tikzpicture}[
-  every node/.style={text=iliadInk,font=\normalsize},
-  state/.style={circle,draw=iliadAccent,line width=0.9pt,
-    fill=iliadAccent!7,minimum size=9mm,inner sep=1pt},
-  flow/.style={-{Stealth[length=2.2mm]},draw=iliadAccent,line width=0.9pt}
-]
-  \node[state] (zero) at (0,0) {$0$};
-  \node[state] (one) at (3.3,0) {$1$};
-  \node[state] (random) at (6.6,0) {$R$};
-  \draw[flow] (zero) -- node[above] {$0:1$} (one);
-  \draw[flow] (one) -- node[above] {$1:1$} (random);
-  \draw[flow] (random.north)
-    .. controls +(0,0.8) and +(0,0.8) ..
-    node[above] {$0:1-p,\quad 1:p$} (zero.north);
+\begin{tikzpicture}
+  \node[generator state] (zero) at (0,0) {$s_0$};
+  \node[generator state] (one) at (4.8,0) {$s_1$};
+  \node[generator state] (random) at (2.4,-1.55) {$s_R$};
+  \draw[generator edge] (zero) -- node[emission label] {$0:1$} (one);
+  \draw[generator edge] (one) -- node[emission label,sloped] {$1:1$} (random);
+  \draw[generator edge] (random) to[bend left=27] node[emission label,sloped] {$0:1-p$} (zero);
+  \draw[generator edge] (random) to[bend right=27] node[emission label,sloped] {$1:p$} (zero);
 \end{tikzpicture}

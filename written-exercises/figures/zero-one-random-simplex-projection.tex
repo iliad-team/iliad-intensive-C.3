@@ -1,0 +1,31 @@
+% Draw in barycentric coordinates expressed as (q, eta_{s_R}).
+% At p=1/2, q = eta_{s_1} + eta_{s_R}/2 is the probability of emitting 1.
+\begin{tikzpicture}[
+  x=10cm,y=2.8cm,font=\small,text=iliadInk,
+  guide/.style={densely dashed,draw=iliadMuted!55,thin},
+  point/.style={circle,fill=iliadAccent,inner sep=0pt,minimum size=4pt},
+  simplex/.style={draw=iliadAccent,line width=0.8pt}
+]
+  \coordinate (s0) at (0,0);
+  \coordinate (s1) at (1,0);
+  \coordinate (sr) at ({1/2},1);
+  \fill[iliadTint] (s0) -- (s1) -- (sr) -- cycle;
+  \foreach \q/\height in {0/0,{1/3}/{2/3},{2/3}/0,1/0}{
+    \draw[guide] (\q,\height) -- (\q,-0.42);
+  }
+  \draw[guide,draw=iliadAccent,semithick] (sr) -- ({1/2},-0.42);
+  \draw[simplex] (s0) -- (s1) -- (sr) -- cycle;
+  \node[point,label=above left:{$s_0:\ \eta^{(11)}$}] at (s0) {};
+  \node[point,label=above right:{$s_1:\ \eta^{(00)}$}] at (s1) {};
+  \node[point,label=above:{$s_R:\ \eta^{(01)}$}] at (sr) {};
+  \node[point,label=left:{$\eta^{(1)}$}] at ({1/3},{2/3}) {};
+  \node[point,label=right:{$\eta^{(\emptyset)}$}] at ({1/2},{1/3}) {};
+  \node[point,label=above right:{$\eta^{(10)}$}] at ({1/2},0) {};
+  \node[point,label=above:{$\eta^{(0)}$}] at ({2/3},0) {};
+
+  \draw[simplex] (0,-0.42) -- (1,-0.42);
+  \foreach \q/\tick in {0/0,{1/3}/{\tfrac13},{1/2}/{\tfrac12},{2/3}/{\tfrac23},1/1}{
+    \node[point,label=below:{$\tick$}] at (\q,-0.42) {};
+  }
+  \node[below] at (0.5,-0.67) {$q=\Pr(X_{n+1}=1\mid X_{1:n}=x_{1:n})$};
+\end{tikzpicture}

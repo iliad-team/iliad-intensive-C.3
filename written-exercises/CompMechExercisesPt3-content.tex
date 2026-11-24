@@ -4,8 +4,8 @@
 \studentonly{%
   \begin{instructions}
     Give a clear justification for each answer. You may use results proved in
-    the lecture unless an exercise asks you to establish them. Questions marked
-    \textbf{Extension} are optional.
+    the lecture unless an exercise asks you to establish them. Complete the
+    \textbf{Core} exercises. Exercises and subparts marked \textbf{Extension} are optional.
   \end{instructions}}
 
 \solutiononly{%
@@ -15,7 +15,25 @@
     mathematical reasoning is correct.
   \end{instructions}}
 
-\begin{exercise}{Translating between HMM diagrams and matrices}
+\tikzset{
+  state/.style={circle,draw=iliadAccent,fill=iliadAccent!7,
+    line width=0.9pt,minimum size=8mm,inner sep=1pt},
+  flow/.style={-{Stealth[length=2.2mm]},draw=iliadAccent,line width=0.9pt},
+  label text/.style={font=\small,text=iliadInk,fill=white,inner sep=1.5pt}
+}
+
+\begin{exercise}[Core]{Translating between HMM diagrams and matrices}
+  % Unroll three transitions in time, including repeated visits to a state.
+  \newcommand{\threeStepPath}[7]{%
+    \begin{tikzpicture}
+      \node[state] (start) at (0,0) {$#1$};
+      \node[state] (first) at (2.6,0) {$#3$};
+      \node[state] (second) at (5.2,0) {$#5$};
+      \node[state] (last) at (7.8,0) {$#7$};
+      \draw[flow] (start) -- node[label text] {$#2$} (first);
+      \draw[flow] (first) -- node[label text] {$#4$} (second);
+      \draw[flow] (second) -- node[label text] {$#6$} (last);
+    \end{tikzpicture}}
   For an edge-emitting hidden Markov model, use the convention
   \[
     T^{(a)}_{ij}
@@ -27,15 +45,19 @@
 
   \begin{parts}
     \item Suppose that $T^{(a)}_{ij}=r$. Explain each component of the
-      following diagram:
-      \[
-        i\xrightarrow{\,a:r\,}j.
-      \]
+      following diagram.
+      \par\nobreak
+      {\centering
+        \begin{tikzpicture}
+          \node[state] (i) at (0,0) {$i$};
+          \node[state] (j) at (3,0) {$j$};
+          \draw[flow] (i) -- node[label text] {$a:r$} (j);
+        \end{tikzpicture}\par}
       What does a zero entry mean? Why is the matrix
       $T:=\sum_{a\in\mathcal X}T^{(a)}$ row-stochastic?
 
     \item \textbf{From matrices to a diagram: Zero--One--Random.}
-      Take the state order to be $(0,1,R)$ and suppose that
+      Take the state order to be $(s_0,s_1,s_R)$ and suppose that
       \[
         \eta^{(\emptyset)}
           =\begin{bmatrix}\tfrac13&\tfrac13&\tfrac13\end{bmatrix},
@@ -56,7 +78,7 @@
       \]
       \begin{subparts}
         \item Draw the corresponding edge-emitting HMM. Describe informally
-          the three phases represented by $0$, $1$, and $R$.
+          what each hidden state $s_0$, $s_1$, and $s_R$ emits.
 
         \item Calculate $\Pr(X_{1:3}=011)$ and
           $\Pr(X_{1:3}=000)$ in two ways: first by tracing paths through your
@@ -68,17 +90,21 @@
           \]
       \end{subparts}
 
-    \item \textbf{From a diagram to matrices: the Even Process.}
-      Consider the edge-emitting HMM
-      \[
-        A\xrightarrow{\,0:q\,}A,
-        \qquad
-        A\xrightarrow{\,1:1-q\,}B,
-        \qquad
-        B\xrightarrow{\,1:1\,}A,
-      \]
-      with no other edges. Take the state order to be $(A,B)$ and let
+    \item \begin{minipage}[t]{\linewidth}
+      \textbf{From a diagram to matrices: the Even Process.}
+      Take the state order to be $(A,B)$ and let
       $\eta^{(\emptyset)}=\begin{bmatrix}\tfrac12&\tfrac12\end{bmatrix}$.
+      \par\nobreak
+      {\centering
+        \begin{tikzpicture}
+          \node[state] (a) at (0,0) {$A$};
+          \node[state] (b) at (4,0) {$B$};
+          \draw[flow] (a.north west) .. controls +(-1.3,0.8) and +(-1.3,-0.8) ..
+            node[label text] {$0:q$} (a.south west);
+          \draw[flow] (a) to[bend left=25] node[label text] {$1:1-q$} (b);
+          \draw[flow] (b) to[bend left=25] node[label text] {$1:1$} (a);
+        \end{tikzpicture}\par}
+      \end{minipage}
       \begin{subparts}
         \item Construct $T^{(0)}$ and $T^{(1)}$. Account explicitly for every
           zero entry in the two matrices.
@@ -129,29 +155,26 @@
 
       \item
         \begin{subparts}
-          \item The nonzero entries give the transitions
-            \[
-              0\xrightarrow{\,0:1\,}1,
-              \qquad
-              1\xrightarrow{\,1:1\,}R,
-              \qquad
-              R\xrightarrow{\,0:1-p\,}0,
-              \qquad
-              R\xrightarrow{\,1:p\,}0.
-            \]
-            Thus the diagram is a three-state cycle, with two differently
-            labelled edges from $R$ to $0$. State $0$ is the phase that emits
-            $0$ deterministically, state $1$ is the phase that emits $1$
-            deterministically, and state $R$ is the random phase, which emits
+          \item The nonzero entries give the following generator.
+            \par\nobreak
+            {\centering
+              \begin{tikzpicture}
+                \node[state] (zero) at (0,0) {$s_0$};
+                \node[state] (one) at (4.8,0) {$s_1$};
+                \node[state] (random) at (2.4,-1.55) {$s_R$};
+                \draw[flow] (zero) -- node[label text] {$0:1$} (one);
+                \draw[flow] (one) -- node[label text,sloped] {$1:1$} (random);
+                \draw[flow] (random) to[bend left=27] node[label text,sloped] {$0:1-p$} (zero);
+                \draw[flow] (random) to[bend right=27] node[label text,sloped] {$1:p$} (zero);
+              \end{tikzpicture}\par}
+            The three states form a cycle. State $s_0$ emits $0$
+            deterministically, $s_1$ emits $1$ deterministically, and $s_R$ emits
             $1$ with probability $p$ and $0$ with probability $1-p$.
 
-          \item For $011$, the only possible initial state is $0$. The model
-            then follows
-            \[
-              0\xrightarrow{\,0:1\,}1
-               \xrightarrow{\,1:1\,}R
-               \xrightarrow{\,1:p\,}0.
-            \]
+          \item For $011$, the only possible initial state is $s_0$. The model
+            follows this path.
+            \par\nobreak
+            {\centering\threeStepPath{s_0}{0:1}{s_1}{1:1}{s_R}{1:p}{s_0}\par}
             Including the initial probability $1/3$ gives
             $\Pr(011)=p/3$. Matrix multiplication gives the same result:
             \[
@@ -161,11 +184,11 @@
               \Pr(011)=p/3.
             \]
 
-            No state permits a path labelled $000$: starting from $0$, the
-            first $0$ moves to state $1$, which cannot emit $0$; starting from
-            $1$, even the first $0$ is impossible; and starting from $R$, the
-            first two zeros move through $R\to0\to1$, after which a third zero
-            is impossible. Correspondingly,
+            No state permits a path labelled $000$. From $s_0$, the first
+            $0$ leads to $s_1$, which cannot emit $0$. From $s_1$, even
+            the first $0$ is impossible. From $s_R$, the first two zeros
+            take the path $s_R\to s_0\to s_1$, so a third zero is impossible.
+            Correspondingly,
             \[
               \eta^{(\emptyset)}T^{(0)}T^{(0)}T^{(0)}
                 =\begin{bmatrix}0&0&0\end{bmatrix},
@@ -208,12 +231,9 @@
             Its entries are nonnegative and both rows sum to one.
 
           \item The word $011$ can be produced only by starting from $A$ and
-            following
-            \[
-              A\xrightarrow{\,0:q\,}A
-               \xrightarrow{\,1:1-q\,}B
-               \xrightarrow{\,1:1\,}A.
-            \]
+            following this path.
+            \par\nobreak
+            {\centering\threeStepPath{A}{0:q}{A}{1:1-q}{B}{1:1}{A}\par}
             Thus
             \[
               \Pr(011)=\frac12q(1-q).
@@ -262,7 +282,7 @@
 \end{exercise}
 
 \newcommand{\messThreeExercise}{%
-\begin{exercise}{Nonunifilar generators and large belief-state automata}
+\begin{exercise}[Extension]{Nonunifilar generators and large belief-state automata}
   For a belief $\eta$ and a symbol $a$ satisfying
   $\eta T^{(a)}\mathbf 1>0$, write
   \[
@@ -513,16 +533,17 @@
 \end{exercise}
 }
 
-\begin{exercise}{Belief states and a lossy next-token readout}
-  Continue with the Zero--One--Random HMM from Exercise 1, using state order
-  $(0,1,R)$. For an allowable history $x_{1:n}=x_1\cdots x_n$, compute its
-  belief from scratch as
+\begin{exercise}[Core]{Belief states and a lossy next-token readout}
+  Continue with the Zero--One--Random HMM from Exercise 1, using state
+  order $(s_0,s_1,s_R)$. For an allowable history $x_{1:n}=x_1\cdots x_n$,
+  compute its belief from scratch as
   \[
     \eta^{(x_{1:n})}
       :=\frac{\eta^{(\emptyset)}T^{(x_1)}\cdots T^{(x_n)}}
         {\eta^{(\emptyset)}T^{(x_1)}\cdots T^{(x_n)}\mathbf 1}.
   \]
-  Here $\eta_i^{(x_{1:n})}=\Pr(S_n=i\mid X_{1:n}=x_{1:n})$. For an allowable
+  Here $\eta_s^{(x_{1:n})}=\Pr(S_n=s\mid X_{1:n}=x_{1:n})$ for
+  $s\in\{s_0,s_1,s_R\}$. For an allowable
   extension $x_{1:n+1}=x_{1:n}a$, update recursively as
   \[
     \eta^{(x_{1:n+1})}
@@ -534,7 +555,7 @@
     \item Compute $\eta^{(0)}$ and $\eta^{(1)}$. Interpret their components
       as posterior probabilities over the three hidden phases.
 
-    \item Show that the seven beliefs
+    \item Using your favourite tool, verify that the seven beliefs
       \[
         \mathcal B=
         \bigl\{
@@ -576,9 +597,9 @@
         \qquad
         A_{ia}:=\sum_jT^{(a)}_{ij}.
       \]
-      Visualise the belief geometry on the $2$-simplex over hidden states
-      $(0,1,R)$ and the next-token geometry on the $1$-simplex over symbols
-      $(0,1)$.
+      For the diagrams, fix $p=\tfrac12$ and visualise the belief geometry on
+      the $2$-simplex over hidden states $(s_0,s_1,s_R)$ and the next-token
+      geometry on the $1$-simplex over symbols $(0,1)$.
 
     \item Calculate
       \[
@@ -619,9 +640,9 @@
           \eta^{(1)}
             =\begin{bmatrix}\dfrac p{1+p}&0&\dfrac1{1+p}\end{bmatrix}.
         \]
-        After observing $0$, the current phase is either $0$ or $1$ with the
-        displayed posterior probabilities, and cannot be $R$. After observing
-        $1$, it is either $0$ or $R$, and cannot be $1$.
+        After observing $0$, the possible hidden states are $s_0$ and $s_1$,
+        with the probabilities shown in $\eta^{(0)}$. After observing $1$,
+        they are $s_0$ and $s_R$, with the probabilities shown in $\eta^{(1)}$.
 
       \item Direct evaluation gives
         \[
@@ -638,25 +659,37 @@
         $\eta^{(\emptyset)}$, $\eta^{(0)}$, and $\eta^{(1)}$ have different
         supports from one another and from the pure beliefs. The only remaining
         comparison is between $\eta^{(0)}$ and $\eta^{(10)}$, which both have
-        support $\{0,1\}$. Equality would require
+        support $\{s_0,s_1\}$. Equality would require
         $1/(2-p)=p$, or $(1-p)^2=0$, contrary to $p<1$.
 
-        The allowable updates are
-        \[
-          \begin{array}{c|cc}
-            \text{current belief} & 0 & 1\\
-            \hline
-            \eta^{(\emptyset)} & \eta^{(0)} & \eta^{(1)}\\
-            \eta^{(0)}         & \eta^{(00)} & \eta^{(01)}\\
-            \eta^{(1)}         & \eta^{(10)} & \eta^{(11)}\\
-            \eta^{(10)}        & \eta^{(00)} & \eta^{(01)}\\
-            \eta^{(11)}        & \eta^{(00)} & \text{impossible}\\
-            \eta^{(00)}        & \text{impossible} & \eta^{(01)}\\
-            \eta^{(01)}        & \eta^{(11)} & \eta^{(11)}
-          \end{array}
-        \]
-        This table specifies the requested symbol-labelled diagram and shows
-        that every allowable update stays in $\mathcal B$.
+        Start at $\eta^{(\emptyset)}$ and follow the arrow labelled by each
+        observed symbol. Every allowable update leads to a belief in $\mathcal B$.
+        \par\nobreak
+        {\centering
+          \begin{tikzpicture}[every node/.style={font=\small}]
+            \node[state] (start) at (0,0) {$\eta^{(\emptyset)}$};
+            \node[state] (zero) at (2.3,1.2) {$\eta^{(0)}$};
+            \node[state] (one) at (2.3,-1.2) {$\eta^{(1)}$};
+            \node[state] (ten) at (4.9,-1.2) {$\eta^{(10)}$};
+            \node[state] (zerozero) at (7.5,1.2) {$\eta^{(00)}$};
+            \node[state] (zeroone) at (7.5,-1.2) {$\eta^{(01)}$};
+            \node[state] (oneone) at (10.4,0) {$\eta^{(11)}$};
+
+            \draw[flow] (start) -- node[label text] {$0$} (zero);
+            \draw[flow] (start) -- node[label text] {$1$} (one);
+            \draw[flow] (zero) -- node[label text] {$0$} (zerozero);
+            \draw[flow] (zero) -- node[label text,pos=0.3] {$1$} (zeroone);
+            \draw[flow] (one) -- node[label text] {$0$} (ten);
+            \draw[flow] (one.south east) .. controls +(1,-1.3) and +(0,-2.9) ..
+              node[label text] {$1$} (oneone.south);
+            \draw[flow,preaction={draw=white,line width=4pt,-}]
+              (ten) -- node[label text,pos=0.7] {$0$} (zerozero);
+            \draw[flow] (ten) -- node[label text] {$1$} (zeroone);
+            \draw[flow] (zerozero) -- node[label text] {$1$} (zeroone);
+            \draw[flow] (zeroone) to[bend left=20] node[label text] {$0$} (oneone);
+            \draw[flow] (zeroone) to[bend right=20] node[label text] {$1$} (oneone);
+            \draw[flow] (oneone) -- node[label text] {$0$} (zerozero);
+                        \end{tikzpicture}\par}
 
       \item
         \begin{subparts}
@@ -672,21 +705,21 @@
                 \epsilon(01)&\longleftrightarrow\eta^{(01)}.
               \end{aligned}
             \]
-            The transition table from part (b) agrees with the causal-state
+            The transition diagram from part (b) agrees with the causal-state
             automaton after making these substitutions.
 
           \item The pure beliefs $\eta^{(11)}$, $\eta^{(00)}$, and
-            $\eta^{(01)}$ identify the hidden phase exactly. The other four
+            $\eta^{(01)}$ identify $s_0$, $s_1$, and $s_R$, respectively. The other four
             beliefs assign positive probability to more than one phase and
             therefore represent uncertainty.
             After two observations only the history $10$ leaves a mixed
             belief. Either allowable third symbol sends $\eta^{(10)}$ to a
             pure belief. Once the belief is pure, every allowable transition
-            in the table leads to another pure belief, so the phase remains
+            in the diagram leads to another pure belief, so the phase remains
             known.
 
           \item The generator has access to its actual hidden phase and needs
-            only the three states $0$, $1$, and $R$. An observer begins with
+            only the three states $s_0$, $s_1$, and $s_R$. An observer begins with
             an unknown phase and must also represent four transient posterior
             distributions before synchronising with the generator. This
             example therefore shows that inference can require a richer state
@@ -695,7 +728,7 @@
 
       \item The probability of each symbol from a hidden phase is obtained by
         summing the corresponding row of its symbol matrix over destination
-        states. With column order $(0,1)$, this gives
+        states. With rows ordered as $(s_0,s_1,s_R)$ and columns as $(0,1)$, this gives
         \[
           A=
           \begin{bmatrix}
@@ -737,15 +770,27 @@
         beliefs $\eta^{(01)}$ and $\eta^{(10)}$ to the same point
         $p^{(01)}=p^{(10)}=(1-p,p)$.
 
+        \begin{center}
+          \begin{minipage}{0.96\linewidth}
+            \centering
+            \input{figures/zero-one-random-simplex-projection.tex}\par
+            \smallskip
+            {\small For $p=\tfrac12$, follow each belief vertically to its
+            next-token distribution $(1-q,q)$. The empty history, $01$, and $10$
+            give three distinct beliefs on the central dashed line, all projecting
+            to $(\tfrac12,\tfrac12)$.\par}
+          \end{minipage}
+        \end{center}
+
       \item Starting from $\eta^{(10)}=(1-p,p,0)$, observing a $0$ can only
-        come from phase $0$ and moves the process to phase $1$, which cannot
+        come from $s_0$ and moves the process to $s_1$, which cannot
         emit a second $0$. Hence
         \[
           \Pr(X_{3:4}=00\mid X_{1:2}=10)
             =\eta^{(10)}T^{(0)}T^{(0)}\mathbf 1=0.
         \]
         Starting from $\eta^{(01)}=(0,0,1)$, the first $0$ has probability
-        $1-p$ and moves the process to phase $0$, which emits the second $0$
+        $1-p$ and moves the process from $s_R$ to $s_0$, which emits the second $0$
         deterministically. Therefore
         \[
           \Pr(X_{3:4}=00\mid X_{1:2}=01)
@@ -775,7 +820,7 @@
 
 \messThreeExercise
 
-\begin{exercise}{Generalised hidden Markov models and predictive vectors}
+\begin{exercise}[Extension]{Generalised hidden Markov models and predictive vectors}
   A $d$-dimensional generalised hidden Markov model (GHMM) consists of a
   finite alphabet $\mathcal X$, real $d\times d$ matrices
   $(T^{(a)})_{a\in\mathcal X}$, an initial row vector

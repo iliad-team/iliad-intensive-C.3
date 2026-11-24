@@ -4,12 +4,13 @@
 \usepackage{iliad-slides}
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta,shapes.geometric,fit}
+\input{figures/instrumental-goals.tex}
 \graphicspath{{figures/}}
 \title{Computational Mechanics}
 \subtitle{1. Overview \& Scope}
 \institute{ILIAD Intensive}
-\date{Autumn 2026}
-\author{Xavier Poncini (Simplex)}
+\date{November 2026}
+\author{Xavier Poncini, Simplex}
 
 \begin{document}
 \iliadtitle
@@ -43,7 +44,7 @@
 
 % 4. Questions are complete sentences, with no unnecessary hierarchy.
 \begin{frame}{Central questions}
-  Some questions that are central to comp-mech:
+  Some questions that are central to computational mechanics:
   \vspace{3mm}
 
   \begin{itemize}
@@ -58,8 +59,8 @@
 \end{frame}
 
 \begin{frame}{Optimal prediction}
-  Not all systems are interesting! Comp-mech places an emphasis on those
-  performing \keyterm{optimal prediction}. In this setting the central question becomes:
+  Not all systems are interesting! Computational mechanics places an emphasis on those
+  performing \keyterm{optimal prediction}. The central question becomes:
   \vspace{5mm}
 
   {\centering
@@ -78,12 +79,12 @@
 \begin{frame}{Instrumental and terminal goals}
   We have strong reason to believe that AI systems will pursue a range of
   \keyterm{instrumental goals} in service of their \keyterm{terminal goal}.
-  \begin{center}\evidenceimage[44mm]{instrumental}\end{center}
+  \begin{center}\instrumentalgoalsdiagram{overview}\end{center}
 \end{frame}
 
 \begin{frame}{Optimal prediction as an intervention target}
-  Comp-mech uses an \keyterm{instrumental goal} as an intervention target point.
-  \begin{center}\evidenceimage[37mm]{intervention}\end{center}
+  Computational mechanics uses an \keyterm{instrumental goal} as an intervention target.
+  \begin{center}\instrumentalgoalsdiagram{prediction}\end{center}
   By considering internal representations consistent with optimal prediction
   the search space is reduced.
 \end{frame}
@@ -91,7 +92,7 @@
 \begin{frame}{Capability scale and optimal prediction}
   Targeting an instrumental goal is \keyterm{scale-free}: it will be relevant
   to current and future models.
-  \begin{center}\evidenceimage[23mm]{capability_scale}\end{center}
+  \begin{center}\input{figures/capability-scale.tex}\end{center}
   {\small
   Which contrasts \keyterm{scale-sensitive} approaches e.g.\ AI control that are
   only applicable up to a fixed capability scale.
@@ -101,7 +102,7 @@
 \end{frame}
 
 \begin{frame}{The research program}
-  Comp-mech applied to AI safety is a young research program
+  Computational mechanics applied to AI safety is a young research program
   ($\sim$2.5 years). There is much to do!
 
   Progress can be broken down into two orthogonal directions:
@@ -124,7 +125,7 @@
   \begin{columns}[T,onlytextwidth]
     \begin{column}{0.36\textwidth}
       \centering\resizebox{!}{38mm}{\input{figures/hierarchy.tex}}\\[1mm]
-      {\footnotesize $*$ not exhaustive}
+      {\footnotesize \textsuperscript{*} not exhaustive}
     \end{column}
     \begin{column}{0.60\textwidth}
       \vspace{4mm}
@@ -138,8 +139,8 @@
   optimal prediction?
   \begin{columns}[T,onlytextwidth]
     \begin{column}{0.36\textwidth}
-      \centering\resizebox{!}{42mm}{\input{figures/hierarchy_green.tex}}\\[1mm]
-      {\footnotesize $*$ not exhaustive}
+      \centering\resizebox{!}{42mm}{\def\highlightPCFG{}\input{figures/hierarchy_green.tex}}\\[1mm]
+      {\footnotesize \textsuperscript{*} not exhaustive}
     \end{column}
     \begin{column}{0.60\textwidth}
       \vspace{4mm}
@@ -158,15 +159,15 @@
     \toprule
     Architecture & Parameters (approximately)\\
     \midrule
-    Transformer & $10^{5}$\\
-    LSTM        & $10^{5}$\\
-    RNN         & $10^{4}$\\
-    GRU         & $10^{5}$\\
+    Transformer & $10^{10}$\\
+    LSTM        & $10^{5\phantom{0}}$\\
+    RNN         & $10^{4\phantom{0}}$\\
+    GRU         & $10^{5\phantom{0}}$\\
     \bottomrule
   \end{tabular*}
   \vspace{3mm}
 
-  Very toy compared to current frontier models ($\sim 10^{12}$)!
+  Nearing frontier scale ($\sim 10^{12}$) for transformers on toy processes!
 \end{frame}
 
 % 13. Empirical example following the comparison of network sizes.
@@ -195,25 +196,20 @@
 
 \begin{frame}{The research frontier}
   We are working to push the Pareto frontier:
-  \begin{center}\resizebox{!}{53mm}{\input{figures/pareto.tex}}\end{center}
-\end{frame}
-
-% 15 (original 14). Preserve diagram and qualification without obscuring data.
-\begin{frame}{The research frontier}
-  We are working to push the Pareto frontier:
-  \vspace{1mm}
-  \begin{columns}[T,onlytextwidth]
-    \begin{column}{0.49\textwidth}
-      \centering\resizebox{!}{51mm}{\input{figures/pareto.tex}}
-    \end{column}
-    \begin{column}{0.46\textwidth}
-      \vspace{3mm}
-      \slidelabel{Wild Speculation}
-      As the research program is scale-free one view is that we should
-      develop the foundations such that future automated AI Safety
-      researchers can pursue these ideas independently.
-    \end{column}
-  \end{columns}
+  \begin{center}
+  \resizebox{!}{53mm}{\input{figures/pareto-november.tex}}%
+  \only<2>{%
+    \begin{tikzpicture}[remember picture,overlay]
+      \fill[white,opacity=.65] (current page.south west) rectangle (current page.north east);
+      \node[fill=white,draw=iliadAccent,line width=.7pt,text width=94mm,
+            inner xsep=5mm,inner ysep=4mm,align=left] at (current page.center) {%
+        \textcolor{iliadAccent}{\bfseries Wild Speculation}\par\vspace{1mm}
+        As the research program is scale-free one view is that we should
+        develop the foundations such that future automated AI safety
+        researchers can pursue these ideas independently.};
+    \end{tikzpicture}%
+  }%
+  \end{center}
 \end{frame}
 
 \begin{frame}{Scope: what will we tackle today?}

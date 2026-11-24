@@ -4,8 +4,8 @@
 \studentonly{%
   \begin{instructions}
     Give a clear justification for each answer. You may use results proved in
-    the lecture unless an exercise asks you to establish them. Questions marked
-    \textbf{Extension} are optional.
+    the lecture unless an exercise asks you to establish them. Complete the
+    \textbf{Core} exercises. Exercises and subparts marked \textbf{Extension} are optional.
   \end{instructions}}
 
 \solutiononly{%
@@ -15,7 +15,11 @@
     reasoning is correct.
   \end{instructions}}
 
-\begin{exercise}{From statistics to partitions}
+\begin{exercise}[Core]{From statistics to partitions}
+  Write $\mathcal X^*:=\bigcup_{n\geq 0}\mathcal X^n$ for the finite words
+  over the alphabet $\mathcal X$, including the empty word. The possible histories
+  form the set $\mathcal X_+^*:=\{x\in\mathcal X^* \mathrel{:} \Pr(X_{1:|x|}=x)>0\}$.
+
   Let $u_1,\ldots,u_6\in\mathcal X_+^*$ be six possible histories. Suppose
   that they induce the following conditional distributions over the entire
   future:
@@ -56,7 +60,8 @@
     \item Explain why no two cells of $\Pi_B$ can be merged while preserving
       sufficiency. What does this show about $R_B$?
 
-    \item Prove that every refinement of a sufficient partition is also
+    \item A refinement splits cells into smaller cells, and a coarsening merges cells.
+      Prove that every refinement of a sufficient partition is also
       sufficient. Is every coarsening of a sufficient partition necessarily
       sufficient? Use $\Pi_A$, $\Pi_B$, and $\Pi_C$ to illustrate your answer.
 
@@ -125,20 +130,17 @@
   \end{solution}
 \end{exercise}
 
-\begin{exercise}{Causal states are minimal sufficient statistics}
-  For $x,x'\in\mathcal X_+^*$, define the relation $\sim$ by
+\begin{exercise}[Core]{Causal states are minimal sufficient statistics}
+  For a possible history $x$ and a finite word $y$, write
+  $\Pr(y\mid x):=\Pr(X_{|x|+1:|x|+|y|}=y\mid X_{1:|x|}=x)$.
+  Define predictive equivalence on $\mathcal X_+^*$ by
   \[
     x\sim x'
     \quad\Longleftrightarrow\quad
-    \Pr\!\left(
-      X_{|x|+1:|x|+|y|}=y\mid X_{1:|x|}=x
-    \right)
-    =
-    \Pr\!\left(
-      X_{|x'|+1:|x'|+|y|}=y\mid X_{1:|x'|}=x'
-    \right)
+    \Pr(y\mid x)=\Pr(y\mid x')
+    \quad\text{for every }y\in\mathcal X^*.
   \]
-  for every $y\in\mathcal X^*$. Define the causal state of $x$ by
+  Define the causal state of $x$ by
   \[
     \epsilon(x):=[x]_{\sim},
   \]
@@ -234,62 +236,68 @@
   \end{solution}
 \end{exercise}
 
-\begin{exercise}{From finite generators to causal states}
+\begin{exercise}[Extension]{From finite generators to causal states}
+  \tikzset{
+    state/.style={circle,draw=iliadAccent,fill=iliadAccent!7,
+      line width=0.9pt,minimum size=8mm,inner sep=1pt},
+    flow/.style={-{Stealth[length=2.2mm]},draw=iliadAccent,line width=0.9pt},
+    label text/.style={font=\small,text=iliadInk,fill=white,inner sep=1.5pt}
+  }
   In this exercise, $S_t$ denotes the hidden state immediately before the
-  transition that emits $X_{t+1}$. All parameters lie strictly between $0$
-  and $1$.
+  transition that emits $X_{t+1}$. An edge label $x:r$ means that the
+  process emits $x$ and follows the edge with probability $r$.
 
   \begin{parts}
     \item \textbf{The Zero--One--Random Process.}
-      Let $S_0$ be uniformly distributed over
-      $\{s_0,s_1,s_R\}$. The process has transitions
-      \[
-        s_0\xrightarrow{\,0:1\,}s_1,
-        \qquad
-        s_1\xrightarrow{\,1:1\,}s_R,
-        \qquad
-        s_R
-        \begin{cases}
-          \xrightarrow{\,0:1-p\,}s_0,\\[-1mm]
-          \xrightarrow{\,1:p\,}s_0.
-        \end{cases}
-      \]
-      An edge label $x:q$ means that the process emits $x$ and follows the
-      edge with probability $q$.
+      Let the initial hidden state $S_0$ be uniformly distributed over $\{s_0,s_1,s_R\}$.
+      From $s_R$, the process emits $1$ with probability $p$, where $0<p<1$.
+      \par\nobreak
+      {\centering
+        \begin{tikzpicture}
+          \node[state] (zero) at (0,0) {$s_0$};
+          \node[state] (one) at (4.8,0) {$s_1$};
+          \node[state] (random) at (2.4,-1.55) {$s_R$};
+          \draw[flow] (zero) -- node[label text] {$0:1$} (one);
+          \draw[flow] (one) -- node[label text,sloped] {$1:1$} (random);
+          \draw[flow] (random) to[bend left=27] node[label text,sloped] {$0:1-p$} (zero);
+          \draw[flow] (random) to[bend right=27] node[label text,sloped] {$1:p$} (zero);
+        \end{tikzpicture}\par}
 
       \begin{subparts}
-        \item List all possible histories of length two. For each history,
-          determine whether it uniquely identifies the current hidden phase.
-          When it does, identify that phase.
+        \item List all possible histories of length two. Which histories
+          uniquely determine the hidden state after the second symbol is
+          emitted? For each such history, identify that state.
 
         \item For each ambiguous length-two history, determine which
           additional observations resolve the ambiguity. Identify the
-          resulting phase and explain why it remains known after every
+          resulting hidden state and explain why it remains known after every
           subsequent observation.
 
         \item Assume that $\epsilon(\emptyset)$, $\epsilon(0)$,
-          $\epsilon(1)$, and $\epsilon(10)$ are pairwise distinct. Show that
-          the causal states have shortest-length representatives
+          $\epsilon(1)$, and $\epsilon(10)$ are pairwise distinct. Draw the
+          automaton associated with the causal-state dynamics. Show that the
+          causal states have shortest-length representatives
           \[
             \emptyset,\quad 0,\quad 1,\quad 10,\quad 00,\quad 01,\quad 11.
           \]
           Explain why no additional causal states arise.
 
-        \item Under the assumption in part (iii), draw the automaton
-          associated with the causal-state dynamics.
       \end{subparts}
 
     \item \textbf{The Even Process.}
-      Let $S_0$ be uniformly distributed over $\{A,B\}$ and consider the
-      generator
-      \[
-        A\xrightarrow{\,0:q\,}A,
-        \qquad
-        A\xrightarrow{\,1:1-q\,}B,
-        \qquad
-        B\xrightarrow{\,1:1\,}A.
-      \]
-      Thus every run of $1$s between successive $0$s has even length.
+      Let the initial hidden state $S_0$ be uniformly distributed over $\{A,B\}$.
+      From $A$, the process emits $0$ and stays in $A$ with probability $q$, where $0<q<1$.
+      Every run of $1$s between successive $0$s has even length.
+      \par\nobreak
+      {\centering
+        \begin{tikzpicture}
+          \node[state] (a) at (0,0) {$A$};
+          \node[state] (b) at (4,0) {$B$};
+          \draw[flow] (a.north west) .. controls +(-1.3,0.8) and +(-1.3,-0.8) ..
+            node[label text] {$0:q$} (a.south west);
+          \draw[flow] (a) to[bend left=25] node[label text] {$1:1-q$} (b);
+          \draw[flow] (b) to[bend left=25] node[label text] {$1:1$} (a);
+        \end{tikzpicture}\par}
 
       \begin{subparts}
         \item For each of the length-one histories $0$ and $1$, determine
@@ -299,41 +307,42 @@
           possible one-symbol extensions. Which extensions resolve the
           ambiguity, and which remain ambiguous? You may use the fact that
           $\epsilon(\emptyset)=\epsilon(11)$. What does this imply for
-          histories of the form $1^n$?
+          histories of the form \(1^n = \underbrace{11\cdots1}_{n\text{ ones}}\)?
 
         \item Assume additionally that
-          $\epsilon(\emptyset)\neq\epsilon(1)$. Show that the causal states
-          have shortest representatives
+          $\epsilon(\emptyset)\neq\epsilon(1)$. Draw the automaton
+          associated with the causal-state dynamics. Show that the causal
+          states have shortest representatives
           \[
             \emptyset,\qquad 1,\qquad 0,\qquad 01,
           \]
           and explain why there are no additional causal states. You may
           distinguish causal states using possible and impossible future
           continuations.
-
-        \item Using $\epsilon(\emptyset)=\epsilon(11)$ and assuming
-          $\epsilon(\emptyset)\neq\epsilon(1)$, draw the automaton associated
-          with the causal-state dynamics.
       \end{subparts}
 
     \item \textbf{The Simple Nonunifilar Source.}
-      Let $S_0$ be uniformly distributed over $\{A,B\}$ and consider
-      \[
-        A\xrightarrow{\,0:1/2\,}A,
-        \qquad
-        A\xrightarrow{\,0:1/2\,}B,
-        \qquad
-        B\xrightarrow{\,0:1/2\,}B,
-        \qquad
-        B\xrightarrow{\,1:1/2\,}A.
-      \]
+      Let the initial hidden state $S_0$ be uniformly distributed over $\{A,B\}$.
+      \par\nobreak
+      {\centering
+        \begin{tikzpicture}
+          \node[state] (a) at (0,0) {$A$};
+          \node[state] (b) at (4,0) {$B$};
+          \draw[flow] (a.north west) .. controls +(-1.3,0.8) and +(-1.3,-0.8) ..
+            node[label text] {$0:1/2$} (a.south west);
+          \draw[flow] (a) to[bend left=25] node[label text] {$0:1/2$} (b);
+          \draw[flow] (b.north east) .. controls +(1.3,0.8) and +(1.3,-0.8) ..
+            node[label text] {$0:1/2$} (b.south east);
+          \draw[flow] (b) to[bend left=25] node[label text] {$1:1/2$} (a);
+        \end{tikzpicture}\par}
 
       \begin{subparts}
-        \item Show that observing a $1$ identifies the new hidden state as
-          $A$.
+        \item What single-token observation guarantees that the new hidden
+          state is $A$?
 
         \item Starting from $A$, show that there are $n+1$ hidden paths that
-          emit $0^n$, each with probability $2^{-n}$. How many of these paths
+          emit \(0^n = \overbrace{00\cdots0}^{n\text{ zeros}}\), each with
+          probability $2^{-n}$. How many of these paths
           can subsequently emit $1$? Hence calculate
           \[
             \Pr(X_{n+2}=1\mid X_{1:n+1}=10^n).
@@ -353,26 +362,26 @@
     \begin{parts}
       \item
         \begin{subparts}
-          \item All four length-two histories are possible. Their resulting
-            hidden phases are
+          \item All four length-two histories are possible. The table gives
+            the possible hidden states after the second symbol is emitted.
             \[
               \begin{array}{c|cccc}
                 x_{1:2} & 00 & 01 & 10 & 11\\
                 \hline
-                S_2 & s_1 & s_R & \{s_0,s_1\} & s_0.
+                \text{possible hidden states} & s_1 & s_R & \{s_0,s_1\} & s_0
               \end{array}
             \]
-            Thus $00$, $01$, and $11$ identify the phase exactly, while $10$
+            Thus $00$, $01$, and $11$ identify the hidden state exactly, while $10$
             is ambiguous.
 
-          \item From the phases compatible with $10$, only $s_0$ can emit
-            $0$, and only $s_1$ can emit $1$. Consequently, $100$ identifies
-            the new phase as $s_1$, while $101$ identifies it as $s_R$. From
-            each phase, the emitted symbol determines the next phase, so every
+          \item Of the hidden states compatible with $10$, only $s_0$ can emit
+            $0$, and only $s_1$ can emit $1$. Thus the hidden state is $s_1$
+            after $100$ and $s_R$ after $101$. From each hidden state,
+            the emitted symbol determines the next state, so every
             later observation preserves synchronization.
 
           \item The histories $00$, $01$, and $11$ identify $s_1$, $s_R$,
-            and $s_0$, respectively. These phases induce distinct next-token
+            and $s_0$, respectively. These hidden states induce distinct next-token
             distributions: $s_1$ emits only $1$, $s_0$ emits only $0$, and
             $s_R$ can emit either symbol. Hence they give three distinct causal
             states.
@@ -395,27 +404,38 @@
             \]
             The only repeated continuation set belongs to $0$ and $10$, whose
             causal states are assumed to be distinct. Finally, every history
-            of length at least three identifies the phase by part (ii), and so
-            belongs to one of the states represented by $00$, $01$, and $11$.
+            of length at least three identifies the hidden state by part (ii), and so
+            belongs to one of the causal states represented by $00$, $01$, and $11$.
             No further causal states arise.
 
-          \item Appending each possible symbol gives the causal-state update:
-            \[
-              \begin{array}{c|cc}
-                \text{state} & 0 & 1\\
-                \hline
-                \epsilon(\emptyset) & \epsilon(0)  & \epsilon(1)\\
-                \epsilon(0)         & \epsilon(00) & \epsilon(01)\\
-                \epsilon(1)         & \epsilon(10) & \epsilon(11)\\
-                \epsilon(10)        & \epsilon(00) & \epsilon(01)\\
-                \epsilon(00)        & \text{--}    & \epsilon(01)\\
-                \epsilon(01)        & \epsilon(11) & \epsilon(11)\\
-                \epsilon(11)        & \epsilon(00) & \text{--}
-              \end{array}
-            \]
-            Here a dash denotes an impossible extension. Drawing one node for
-            each row and the indicated symbol-labelled edges gives the
-            required automaton.
+            Start at $\epsilon(\emptyset)$ and follow the arrow labelled by
+            each observed symbol. A missing arrow means that symbol is impossible.
+            \par\nobreak
+            {\centering
+              \begin{tikzpicture}[every node/.style={font=\small}]
+                \node[state] (start) at (0,0) {$\epsilon(\emptyset)$};
+                \node[state] (zero) at (2.3,1.2) {$\epsilon(0)$};
+                \node[state] (one) at (2.3,-1.2) {$\epsilon(1)$};
+                \node[state] (ten) at (4.9,-1.2) {$\epsilon(10)$};
+                \node[state] (zerozero) at (7.5,1.2) {$\epsilon(00)$};
+                \node[state] (zeroone) at (7.5,-1.2) {$\epsilon(01)$};
+                \node[state] (oneone) at (10.4,0) {$\epsilon(11)$};
+
+                \draw[flow] (start) -- node[label text] {$0$} (zero);
+                \draw[flow] (start) -- node[label text] {$1$} (one);
+                \draw[flow] (zero) -- node[label text] {$0$} (zerozero);
+                \draw[flow] (zero) -- node[label text,pos=0.3] {$1$} (zeroone);
+                \draw[flow] (one) -- node[label text] {$0$} (ten);
+                \draw[flow] (one.south east) .. controls +(1,-1.3) and +(0,-2.9) ..
+                  node[label text] {$1$} (oneone.south);
+                \draw[flow,preaction={draw=white,line width=4pt,-}]
+                  (ten) -- node[label text,pos=0.7] {$0$} (zerozero);
+                \draw[flow] (ten) -- node[label text] {$1$} (zeroone);
+                \draw[flow] (zerozero) -- node[label text] {$1$} (zeroone);
+                \draw[flow] (zeroone) to[bend left=20] node[label text] {$0$} (oneone);
+                \draw[flow] (zeroone) to[bend right=20] node[label text] {$1$} (oneone);
+                \draw[flow] (oneone) -- node[label text] {$0$} (zerozero);
+              \end{tikzpicture}\par}
         \end{subparts}
 
       \item
@@ -451,20 +471,26 @@
             $1$. Finally, $\epsilon(\emptyset)\neq\epsilon(1)$ by assumption.
             Hence the displayed representatives are also shortest.
 
-          \item Appending each possible symbol gives the causal-state update:
-            \[
-              \begin{array}{c|cc}
-                \text{state} & 0 & 1\\
-                \hline
-                \epsilon(\emptyset) & \epsilon(0) & \epsilon(1)\\
-                \epsilon(1)         & \epsilon(0) & \epsilon(\emptyset)\\
-                \epsilon(0)         & \epsilon(0) & \epsilon(01)\\
-                \epsilon(01)        & \text{--}   & \epsilon(0)
-              \end{array}
-            \]
-            Here a dash denotes an impossible extension. Drawing one node for
-            each row and the indicated symbol-labelled edges gives the
-            required automaton.
+            Starting at $\epsilon(\emptyset)$, each $1$ switches between
+            $\epsilon(\emptyset)$ and $\epsilon(1)$ until the first $0$
+            takes the process to $\epsilon(0)$.
+            \par\nobreak
+            {\centering
+              \begin{tikzpicture}[every node/.style={font=\small}]
+                \node[state] (start) at (0,1.05) {$\epsilon(\emptyset)$};
+                \node[state] (one) at (0,-1.05) {$\epsilon(1)$};
+                \node[state] (zero) at (3.4,0) {$\epsilon(0)$};
+                \node[state] (zeroone) at (6.8,0) {$\epsilon(01)$};
+
+                \draw[flow] (start) to[bend right=30] node[label text] {$1$} (one);
+                \draw[flow] (one) to[bend right=30] node[label text] {$1$} (start);
+                \draw[flow] (start) -- node[label text] {$0$} (zero);
+                \draw[flow] (one) -- node[label text] {$0$} (zero);
+                \draw[flow] (zero.north west) .. controls +(-0.7,1.1) and +(0.7,1.1) ..
+                  node[label text] {$0$} (zero.north east);
+                \draw[flow] (zero) to[bend left=25] node[label text] {$1$} (zeroone);
+                \draw[flow] (zeroone) to[bend left=25] node[label text] {$1$} (zero);
+              \end{tikzpicture}\par}
         \end{subparts}
 
       \item
@@ -502,30 +528,30 @@
   \end{solution}
 \end{exercise}
 
-\studentonly{\clearpage}
-\begin{exercise}{Why next-token prediction is enough}
+\begin{exercise}[Extension]{Why next-token prediction is enough}
   Recall that
   \[
     \mathcal X_+^*
-      :=\left\{x\in\mathcal X^*:
+      :=\left\{x\in\mathcal X^* \mathrel{:}
         \Pr\!\left(X_{1:|x|}=x\right)>0\right\}
   \]
   is the set of allowable histories.
 
   Consider a model with parameters $\theta$ satisfying
   \[
-    h_n=f_\theta(h_{n-1},x_n),
+    h_n:=f_\theta(h_{n-1},x_n),
     \qquad
-    y_n=g_\theta(h_{n-1},x_n).
+    y_n:=g_\theta(h_{n-1},x_n),
   \]
-  Fix the initial hidden state $h_0$ and suppose that the model predicts the
-  next-token distribution exactly: for every $n\geq1$,
+  where $f_\theta$ and $g_\theta$ are deterministic functions.
+  Fix the initial hidden state $h_0$. Suppose that after every allowable
+  history $x_{1:n}$ of length $n\geq1$, the model outputs the exact
+  next-token distribution
   \[
     y_n
       =\Pr\!\left(
         X_{n+1}\mid X_{1:n}=x_{1:n}
-      \right),
-      \qquad \forall\,x_{1:n}\in\mathcal X_+^*.
+      \right).
   \]
   For every nonempty allowable history, define
   \[
@@ -534,9 +560,9 @@
 
   For $a\in\mathcal X$, define the deterministic update
   \[
-    \Phi_a(h,x):=\bigl(f_\theta(h,x),a\bigr).
+    \Phi_a(h,x):=\bigl(f_\theta(h,x),a\bigr),
   \]
-  For a word $z_{1:j}$, write
+  and for a word $z_{1:j}$, write
   \[
     \Phi_{z_{1:j}}
       :=\Phi_{z_j}\circ\cdots\circ\Phi_{z_1},

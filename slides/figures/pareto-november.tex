@@ -1,0 +1,32 @@
+% November intensive: strong models on toy processes.
+\begin{tikzpicture}[>={Stealth[length=2.4mm,width=2mm]}]
+  \def\frontierpath{(0,1.75)
+    .. controls (1.05,1.72) and (2.16,1.55) .. (2.95,1.23)
+    .. controls (3.66,.94) and (4.10,.58) .. (4.25,0)}
+  \fill[black!8] \frontierpath -- (0,0) -- cycle;
+
+  % The guides bisect the 5.2 by 4.6 plotting area.
+  \fill[violet!16] (2.60,2.30) rectangle (5.2,4.6);
+  \node[align=center,font=\scriptsize\bfseries,text=violet!55!black]
+    at (3.90,3.45) {Safety-relevant\\Zone};
+  \draw[blue,dashed,line width=.7pt] (0,2.30) -- (5.2,2.30);
+  \draw[red,dashed,line width=.7pt] (2.60,0) -- (2.60,4.6);
+  \draw[->,line width=.9pt] (0,0) -- (0,4.6);
+  \draw[->,line width=.9pt] (0,0) -- (5.2,0);
+
+  \draw[line width=1pt] \frontierpath;
+  \foreach \p in {(0,1.75), (2.95,1.23), (4.25,0)}
+    \node at \p {\footnotesize$\times$};
+  \foreach \start/\angle in {(0.60,1.86)/80, (1.70,1.74)/70,
+                             (3.12,1.36)/55, (4.14,.70)/30}
+    \draw[violet,-{Stealth[length=2.2mm,width=1.9mm]},line width=.8pt]
+      \start -- ++(\angle:.62);
+
+  \node[blue,font=\small,anchor=east] at (-.15,3.45) {Real};
+  \node[blue,font=\small,anchor=east] at (-.15,1.15) {Toy};
+  \node[font=\small,anchor=east] at (-.15,2.30) {Process};
+  \node[red,font=\small,anchor=north] at (1.30,-.12) {Weak};
+  \node[red,font=\small,anchor=north] at (3.90,-.12) {Strong};
+  \node[font=\small,anchor=north,align=center] at (2.60,-.75)
+    {Model\\[-.15em]{\footnotesize(Neural Network)}};
+\end{tikzpicture}

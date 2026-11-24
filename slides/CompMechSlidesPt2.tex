@@ -8,8 +8,8 @@
 \title{Computational Mechanics}
 \subtitle{2. Predicting the future}
 \institute{ILIAD Intensive}
-\date{Autumn 2026}
-\author{Xavier Poncini (Simplex)}
+\date{November 2026}
+\author{Xavier Poncini, Simplex}
 
 \begin{document}
 \iliadtitle
@@ -19,7 +19,7 @@
   \begin{enumerate}
     \setlength{\itemsep}{4mm}
     \item Sufficient statistics for prediction
-    \item Causal states: minimal predictive summaries
+    \item Causal states: minimal predictive statistics
     \item Causal-state dynamics
     \item Next-token prediction in RNNs and Transformers
   \end{enumerate}
@@ -33,9 +33,9 @@
   For consecutive times $i$ to $j$, we introduce the notation:
 
   \[
-    X_{i:j}=(X_i,X_{i+1},\ldots,X_j),
+    X_{i:j}:=(X_i,X_{i+1},\ldots,X_j),
     \qquad
-    x_{i:j}=(x_i,x_{i+1},\ldots,x_j)\in\mathcal{X}^{j-i+1}.
+    x_{i:j}:=(x_i,x_{i+1},\ldots,x_j)\in\mathcal{X}^{j-i+1}.
   \]
 
   Consider predicting the \textbf{future} $X_{m+1:m+n}$
@@ -59,10 +59,12 @@
   \setlength{\abovedisplayskip}{4pt}
   \setlength{\belowdisplayskip}{4pt}
 
-  The \textbf{possible histories} are the words that can occur:
+  Among all finite words, the \textbf{possible histories} are those that can occur:
   \[
+    \mathcal X^* := \textstyle\bigcup_{n\ge 0}\mathcal X^n,
+    \qquad
     \mathcal X_+^*
-      =\left\{x\in\mathcal X^*\mid \Pr(X_{1:|x|}=x)>0\right\}.
+      :=\left\{x\in\mathcal X^* \mathrel{:} \Pr(X_{1:|x|}=x)>0\right\}.
   \]
 
   \vspace{3mm}
@@ -74,15 +76,14 @@
   \vspace{3mm}
   $R$ is \textbf{sufficient for prediction} if histories assigned the same
   summary induce the same future distribution:
+  \def\fullpredictionequality{%
+    \Pr\!\left(X_{|x|+1:|x|+|y|}=y\mid X_{1:|x|}=x\right)
+    =\Pr\!\left(X_{|x'|+1:|x'|+|y|}=y\mid X_{1:|x'|}=x'\right)}
   \[
     \begin{gathered}
       R(x)=R(x')\quad\Longrightarrow\\[1mm]
-      \Pr\!\left(
-        X_{|x|+1:|x|+|y|}=y\mid X_{1:|x|}=x
-      \right)
-      =\Pr\!\left(
-        X_{|x'|+1:|x'|+|y|}=y\mid X_{1:|x'|}=x'
-      \right).
+      \alt<2>{\vphantom{\fullpredictionequality}\Pr(y\mid x)=\Pr(y\mid x')}
+        {\fullpredictionequality}.
     \end{gathered}
   \]
   \vspace{3mm}
@@ -166,7 +167,7 @@
 
   \vspace{2mm}
   {\footnotesize\color{iliadMuted}
-  Schematic: dots represent example sequences; matching colours indicate identical predictions.\par}
+  Schematic: dots represent sequences. Matching colours indicate the same future distribution.\par}
   \note{A statistic induces the partition into its nonempty fibres
   $R^{-1}(r)$. The identity statistic retains the entire word and induces the
   singleton partition. Every sufficient partition refines the minimal
@@ -197,33 +198,28 @@
 % Finite-history causal-state definition following Upper (1997).
 \begin{frame}{Causal states}
   \setlength{\parskip}{0pt}
-  \setlength{\abovedisplayskip}{4pt}
-  \setlength{\belowdisplayskip}{4pt}
+  \setlength{\abovedisplayskip}{10pt}
+  \setlength{\belowdisplayskip}{10pt}
   For each $x\in\mathcal X^*_+$, define the map from histories to classes of
   histories by:
   \[
-    \resizebox{0.98\textwidth}{!}{$\displaystyle
-      \epsilon(x)\equiv
-      \left\{x'\in\mathcal X^*_+\;\middle|\;
-        \begin{gathered}
-          \text{for every }y\in\mathcal X^*,\\[1mm]
-          \Pr\!\left(X_{|x|+1:|x|+|y|}=y\mid X_{1:|x|}=x\right)
-          =\Pr\!\left(X_{|x'|+1:|x'|+|y|}=y\mid X_{1:|x'|}=x'\right)
-        \end{gathered}
-      \right\}.
-    $}
+    \epsilon(x):=\left\{x'\in\mathcal X^*_+ \mathrel{:}
+      \Pr(y\mid x)=\Pr(y\mid x') \text{ for every } y\in\mathcal X^*
+    \right\}.
   \]
 
-  \vfill
   The values of $\epsilon$ are the (finite-history) \textbf{causal states}.
 
   \vfill
   \textit{``The causal states record every distinction that makes a difference.''}
 
   \vfill
-  \textbf{Theorem.} $\epsilon$ is a minimal sufficient statistic for prediction.
+  \textbf{Observation.} $\epsilon$ is a minimal sufficient statistic for prediction.
 
-  \textbf{Proof.} We will prove this result in the exercises.
+  \vspace{2mm}
+  Merging any two distinct causal states changes the predicted probability
+  of at least one future word.
+  \mbox{\small\color{iliadMuted}\emph{(We will explore this result in the exercises.)}}
 
   \vfill
   \source{Upper, \emph{Theory and Algorithms for Hidden Markov Models and
@@ -306,10 +302,10 @@
     \begin{aligned}
       \epsilon(0)
         &=\left\{0,\ 10,\ 110,\ 010,\ldots\right\}
-          =\left\{x\in\mathcal X^*_+\mid x\text{ ends in }0\right\},\\[1mm]
+          =\left\{x\in\mathcal X^*_+ \mathrel{:} x\text{ ends in }0\right\},\\[1mm]
       \epsilon(1)
         &=\left\{1,\ 01,\ 11,\ 101,\ldots\right\}
-          =\left\{x\in\mathcal X^*_+\mid x\text{ ends in }1\right\}.
+          =\left\{x\in\mathcal X^*_+ \mathrel{:} x\text{ ends in }1\right\}.
     \end{aligned}
   \]
   \vfill
@@ -523,9 +519,9 @@
 
   \vspace{-3mm}
   \[
-    h_n=f_\theta(h_{n-1},x_n),
+    h_n:=f_\theta(h_{n-1},x_n),
     \qquad
-    y_n=g_\theta(h_{n-1},x_n).
+    y_n:=g_\theta(h_{n-1},x_n).
   \]
 
   \textbf{Proposition.} Fix the initial hidden state $h_0$. Suppose that, for

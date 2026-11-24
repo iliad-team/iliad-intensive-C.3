@@ -14,7 +14,9 @@
     \draw[ring,dashed] (0,0.99) ellipse[x radius=0.94, y radius=0.99];
     \draw[ring] (0,0.34) ellipse[x radius=0.56, y radius=0.34];
     \node[font=\small] at (0,4.52) {PTM};
-    \node[font=\small] at (0,3.92) {$\vdots$};
+    % Centre the dots between the arcs at y=3.62 and y=4.30.
+    \foreach \y in {3.87,3.96,4.05}
+      \fill (0,\y) circle[radius=.55pt];
     \node[font=\small] at (0,3.24) {PCFG};
     \node[font=\small] at (0,2.36) {GHMM};
     \node[font=\small] at (0,1.52) {HMM};

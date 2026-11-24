@@ -44,7 +44,7 @@ Slide 10 no longer repeats the sentence “This naturally leads to a hierarchy�
 
 New slide 13, “Example: belief state geometry”, uses the user-supplied schematic without cropping or alteration. It summarises the affine readout result in Shai et al., *Transformers Represent Belief State Geometry in their Residual Stream*, NeurIPS 2024, Sections 2.3 and 3 ([paper](https://arxiv.org/abs/2405.15943)). The finding is scoped to transformers trained on HMM sequences. Speaker notes distinguish the fitted readout from the transformer itself and explain that the diagram is a schematic. The reading companion still covers the original 17-slide material.
 
-The presentation title slide now identifies Xavier Poncini (Simplex) and dates the course Autumn 2026. The historical statements remain as supplied from Spring 2026. In particular, the program age, model sizes, capability-scale claims, and named Q&A plans have not been updated or independently re-evaluated. The reading companion retains the original Spring 2026 context.
+The presentation title slide now identifies Xavier Poncini (Simplex) and dates the course November 2026. The historical statements remain as supplied from Spring 2026. In particular, the program age, model sizes, capability-scale claims, and named Q&A plans have not been updated or independently re-evaluated. The reading companion retains the original Spring 2026 context.
 
 ## Reuse and build
 

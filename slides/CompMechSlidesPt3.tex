@@ -7,6 +7,12 @@
 \usepackage{iliad-slides}
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta,shapes.geometric,fit}
+\tikzset{
+  generator state/.style={circle,draw=iliadAccent,fill=iliadAccent!7,
+    line width=0.9pt,minimum size=9mm,inner sep=1pt,text=iliadInk},
+  generator edge/.style={-{Stealth[length=2.2mm]},draw=iliadAccent,line width=0.9pt},
+  emission label/.style={font=\small,text=iliadInk,fill=white,inner sep=1.5pt}
+}
 \graphicspath{{figures/}}
 % Factor colours carried over from the original HMM slides.
 \definecolor{hmmInitial}{RGB}{253,246,124}
@@ -18,8 +24,8 @@
 \title{Computational Mechanics}
 \subtitle{3. Representing the past}
 \institute{ILIAD Intensive}
-\date{Autumn 2026}
-\author{Xavier Poncini (Simplex)}
+\date{November 2026}
+\author{Xavier Poncini, Simplex}
 
 \begin{document}
 \iliadtitle
@@ -104,15 +110,10 @@
 
   \vfill
   {\centering
-    \begin{tikzpicture}[
-      every node/.style={text=iliadInk,font=\normalsize},
-      state/.style={circle,draw=iliadAccent,line width=0.9pt,
-        fill=iliadAccent!7,minimum size=9mm,inner sep=1pt},
-      flow/.style={-{Stealth[length=2.2mm]},draw=iliadAccent,line width=0.9pt}
-    ]
-      \node[state] (i) at (0,0) {$i$};
-      \node[state] (j) at (3,0) {$j$};
-      \draw[flow] (i) -- node[above] {$a:p$} (j);
+    \begin{tikzpicture}
+      \node[generator state] (i) at (0,0) {$i$};
+      \node[generator state] (j) at (3,0) {$j$};
+      \draw[generator edge] (i) -- node[emission label] {$a:p$} (j);
       \node[anchor=west] at (4,0) {$p=T^{(a)}_{ij}$};
     \end{tikzpicture}\par}
   \vfill
@@ -216,24 +217,19 @@
   Each observation is an independent coin toss, with
   $\Pr(X_t=1)=p$, where $0<p<1$.
   \[
-    S=\{0\},\qquad\mathcal X=\{0,1\},\qquad
+    S=\{s_0\},\qquad\mathcal X=\{0,1\},\qquad
     \eta^{(\emptyset)}=\begin{bmatrix}1\end{bmatrix}.
   \]
   \vfill
   {\centering
-  \begin{tikzpicture}[
-    every node/.style={text=iliadInk,font=\normalsize},
-    state/.style={circle,draw=iliadAccent,line width=0.9pt,
-      fill=iliadAccent!7,minimum size=10mm,inner sep=1pt},
-    flow/.style={-{Stealth[length=2.2mm]},draw=iliadAccent,line width=0.9pt}
-  ]
-    \node[state] (coin) at (0,0) {$0$};
-    \draw[flow] (coin.north west)
+  \begin{tikzpicture}
+    \node[generator state] (coin) at (0,0) {$s_0$};
+    \draw[generator edge] (coin.north west)
       .. controls +(-1.8,1.1) and +(-1.8,-1.1) ..
-      node[left] {$0:1-p$} (coin.south west);
-    \draw[flow] (coin.south east)
+      node[emission label] {$0:1-p$} (coin.south west);
+    \draw[generator edge] (coin.south east)
       .. controls +(1.8,-1.1) and +(1.8,1.1) ..
-      node[right] {$1:p$} (coin.north east);
+      node[emission label] {$1:p$} (coin.north east);
   \end{tikzpicture}\par}
   \vfill
   {\small
@@ -245,9 +241,8 @@
   \]
   \vfill
   \note{First example from slide 7 of the old HMM deck. The single
-  hidden state is labelled 0, following the direct state-label convention.
-  State labels and emission symbols are separate objects despite sharing
-  a glyph. These are one-by-one matrices. Their product gives the usual
+  hidden state $s_0$ can emit either $0$ or $1$.
+  These are one-by-one matrices. Their product gives the usual
   Bernoulli sequence probability. The displayed output is one illustrative
   finite sample. This revisits the IID example from Part 2.}
 \end{frame}
@@ -263,7 +258,7 @@
   The generator cycles through three phases: emit $0$, emit $1$, then
   emit a random symbol with $\Pr(1)=p$, where $0<p<1$.
   \[
-    S=\{0,1,R\},\qquad \mathcal X=\{0,1\},\qquad
+    S=\{s_0,s_1,s_R\},\qquad \mathcal X=\{0,1\},\qquad
     \eta^{(\emptyset)}=\begin{bmatrix}\tfrac13&\tfrac13&\tfrac13\end{bmatrix}.
   \]
 
@@ -272,7 +267,7 @@
   \vfill
   {\small
     \textbf{Example output:} $\mathtt{011\,010\,011\,011\ldots}$
-    (starting in phase $0$).\quad State order: $(0,1,R)$.\par}
+    (from $s_0$).\quad State order: $(s_0,s_1,s_R)$.\par}
   \[
     T^{(0)}=\begin{bmatrix}
       0&1&0\\
@@ -290,13 +285,13 @@
   \note{Second example from slide 7 of the old HMM deck, using the
   uniform initial phase distribution from the Part 2 exercises. It is
   stationary because the phase advances deterministically around a cycle.
-  The two labels on the return edge denote distinct emissions with the
+  The two return edges denote distinct emissions with the
   same destination. Rows are source states, columns are destination states.
   The row sums across both matrices total one for each state.
   The observer sees emitted symbols, not phase boundaries. This is the
-  same generator used in the exercise, with s_0,s_1,s_R renamed 0,1,R.
-  The displayed output begins in phase 0. Its three-symbol blocks correspond
-  to the phases 0,1,R, with the random phase emitting 1,0,1,1 in succession.
+  same generator used in the exercise.
+  The displayed output begins in phase $s_0$. Its three-symbol blocks correspond
+  to the phases $s_0,s_1,s_R$, with the random phase emitting 1,0,1,1 in succession.
   Later slides will revisit this model to calculate beliefs and recover
   the causal-state automaton that students have already constructed.}
 \end{frame}
@@ -561,45 +556,39 @@
   \]
 
   \vfill
-  After observing $0$ or $1$, respectively, the belief state is
-  \[
-    \eta^{(0)}=(1,0),
-    \qquad
-    \eta^{(1)}=(0,1).
-  \]
+  The two observations give distinct beliefs:
+  $\eta^{(0)}=(1,0)$ and $\eta^{(1)}=(0,1)$.
 
   \vfill
-  However, the future is a sequence of independent fair coin flips in either
-  case:
+  Multiplying from right to left gives one factor of $\tfrac12$ per symbol:
   \[
-    \Pr(y\mid 0)=\Pr(y\mid 1)=2^{-|y|}
+    \begin{gathered}
+      T^{(0)}\mathbf1^\top=T^{(1)}\mathbf1^\top=\tfrac12\mathbf1^\top
+      \quad\Longrightarrow\quad
+      T^{(y)}\mathbf1^\top=2^{-|y|}\mathbf1^\top.\\[3pt]
+      \Pr(y\mid 0)=\Pr(y\mid 1)=2^{-|y|}
       \qquad\text{for every }y\in\{0,1\}^*.
+    \end{gathered}
   \]
 
   \vfill
-  Thus, distinct beliefs can contain exactly the same predictive information.
-  More generally, define the \textbf{predictive equivalence relation}
-  \[
-    \eta\sim\eta'
-      \quad\Longleftrightarrow\quad
-    \eta T^{(y)}\mathbf1^\top
-      =\eta'T^{(y)}\mathbf1^\top
-      \qquad\text{for every }y\in\mathcal X^*.
-  \]
+  Both beliefs have the same future distribution (IID fair coin flips).
 
   \vfill
-  Beliefs are \textbf{minimal} precisely when no two reachable beliefs are
-  \textbf{predictively equivalent}. Generalised HMMs will let us characterise this condition.
+  Beliefs are \textbf{minimal} precisely when distinct reachable beliefs have
+  distinct future distributions. Generalised HMMs characterise this condition.
   \vfill
 
   \note{This HMM generates independent fair coin flips. Its hidden state only
   records the most recently observed token: observing 0 places the model in
-  the first state, while observing 1 places it in the second. Since the two
-  rows of each symbol-labelled transition matrix agree, both hidden states
-  induce the same distribution over every future word. The two posterior
+  the first state, while observing 1 places it in the second. Evaluate the
+  product $T^{(y_1)}\cdots T^{(y_m)}\mathbf1^\top$ from right to left.
+  Each matrix multiplies the all-ones column by one half, leaving
+  $2^{-m}\mathbf1^\top$. Multiplying by either belief row gives $2^{-m}$,
+  since the components of each belief sum to one. The two posterior
   distributions are therefore distinct but predictively equivalent. This
-  shows that sufficiency alone does not imply minimality. The equivalence
-  relation displayed on the slide identifies beliefs that assign the same
+  shows that sufficiency alone does not imply minimality. Predictive equivalence
+  identifies beliefs that assign the same
   probability to every finite continuation. Belief states are minimal exactly
   when every such equivalence class contains only one reachable belief. This
   motivates the move to generalised HMMs on the following slide, where
@@ -624,7 +613,7 @@
       $(T^{(a)})_{a\in\mathcal X}$.
     \item An \textbf{initial row vector}
       $\eta^{(\emptyset)}\in\mathbb R^{1\times d}$.
-    \item A \textbf{column vector} $\phi\in\mathbb R^{d\times 1}$.
+    \item A \textbf{final column vector} $\phi\in\mathbb R^{d\times 1}$.
   \end{itemize}
 
   \vspace{1mm}
@@ -691,6 +680,7 @@
 
   A GHMM is \textbf{minimal-dimensional} if no lower-dimensional GHMM
   realises the same process. For a $d$-dimensional GHMM, this is equivalent to
+  \setlength{\abovedisplayskip}{13pt}
   \[
     \dim\mathcal H=\dim\mathcal F=d.
   \]
@@ -723,11 +713,16 @@
   \setlength{\parskip}{0pt}
   \setlength{\abovedisplayskip}{3pt}
   \setlength{\belowdisplayskip}{3pt}
+  \only<2>{%
+    \setlength{\abovedisplayskip}{5pt}%
+    \setlength{\abovedisplayshortskip}{5pt}%
+    \setlength{\belowdisplayskip}{5pt}%
+    \setlength{\belowdisplayshortskip}{5pt}}
   If an HMM is minimal-dimensional among all GHMM realisations of its process,
   then its belief state is a \textbf{minimal sufficient statistic} for
   prediction.
 
-  \vspace{2mm}
+  \alt<2>{\vfill}{\vspace{2mm}}
   Suppose two supported histories $x_{1:n}$ and $x'_{1:n'}$ predict every
   continuation identically.
   Then, for every $y_{1:m}$,
@@ -739,22 +734,32 @@
     =0.
   \]
 
-  \vspace{1mm}
-  Minimal-dimensionality implies that the future vectors
-  \[
-    T^{(y_1)}\cdots T^{(y_m)}\mathbf1^\top
-  \]
-  span the entire column space. Therefore,
-  \[
-    \eta^{(x_{1:n})}=\eta^{(x'_{1:n'})}.
-  \]
+  \alt<2>{\vfill}{\vspace{1mm}}
+  \only<1>{%
+    Minimal-dimensionality implies that the future vectors
+    \[
+      T^{(y_1)}\cdots T^{(y_m)}\mathbf1^\top
+    \]
+    span the entire column space. Therefore,
+    \[
+      \eta^{(x_{1:n})}=\eta^{(x'_{1:n'})}.
+    \]}%
+  \only<2>{%
+    Minimal dimensionality gives $\dim\mathcal F=d$. Choose $d$ linearly
+    independent future vectors as the columns of $V$. Then $V$ has
+    \textbf{trivial left kernel}, so
+    \[
+      \bigl(\eta^{(x_{1:n})}-\eta^{(x'_{1:n'})}\bigr)V=0
+      \quad\Longrightarrow\quad
+      \eta^{(x_{1:n})}=\eta^{(x'_{1:n'})}.
+    \]}
 
   \vfill
   Thus, histories have the same belief state precisely when they have the
   same distribution over the future. The belief state is
   \textbf{minimal sufficient}.
 
-  \vspace{-1mm}
+  \alt<2>{\vfill}{\vspace{-1mm}}
   \source{Based on Upper (1997), Sections 4.2--4.3.}
   \vfill
 

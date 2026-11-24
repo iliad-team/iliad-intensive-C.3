@@ -33,7 +33,7 @@
 
 \providecommand{\iliadcourse}{Computational Mechanics}
 \providecommand{\iliadpart}{2. Predicting the future}
-\providecommand{\iliadterm}{Autumn 2026}
+\providecommand{\iliadterm}{November 2026}
 \providecommand{\iliadinstitute}{ILIAD Intensive}
 \providecommand{\iliadauthor}{Xavier Poncini}
 \providecommand{\iliadhandout}{Exercise sheet}
@@ -86,7 +86,8 @@
   \par\addvspace{4mm}
   {\Large\bfseries\color{iliadAccent}Exercise \theexercise}
   \if\relax\detokenize{#1}\relax\else
-    \hfill{\small\bfseries\color{iliadMuted}#1}%
+    \hspace{0.6em}{\setlength{\fboxsep}{2.4pt}%
+      \colorbox{iliadAccent}{\large\sffamily\bfseries\color{white}\kern2pt#1\kern2pt}}%
   \fi
   \par\vspace{1mm}
   {\large\bfseries #2\par}
